@@ -1,4 +1,4 @@
-package net.realizeideas.walkingme.authentication
+package net.realizeideas.walkingme.common
 
 /**
  * @author Michael Astreiko

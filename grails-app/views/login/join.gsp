@@ -12,7 +12,7 @@
 
 <body>
 
-<h2>HOW HIGH CAN YOU BOUNCE?</h2>
+<h2>Find places and events you are interested in</h2>
 
 <div class="facebook_button_holder">
   <a id="joinWithFacebook" href="javascript: void(0)" class="btn-auth facebook_button">

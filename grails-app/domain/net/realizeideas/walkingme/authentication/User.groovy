@@ -1,8 +1,12 @@
 package net.realizeideas.walkingme.authentication
 
 import grails.plugins.springsocial.UserConnection
+import net.realizeideas.walkingme.common.Location
+import net.realizeideas.walkingme.base.BasePersistentObject
+import net.realizeideas.walkingme.keywords.Keyword
+import net.realizeideas.walkingme.places.Checkin
 
-class User {
+class User extends BasePersistentObject {
 
     transient springSecurityService
 
@@ -20,6 +24,8 @@ class User {
     boolean accountLocked
     boolean passwordExpired
 
+    static hasMany = [keywords:Keyword, checkins:Checkin]
+
     static constraints = {
         username blank: false, unique: true
         password blank: false
@@ -29,6 +35,8 @@ class User {
         gender(nullable: true)
         location(nullable: true)
         connection(nullable: true)
+        keywords(nullable: true)
+        checkins(nullable: true)
     }
 
     static mapping = {
@@ -40,6 +48,7 @@ class User {
     }
 
     def beforeInsert() {
+        super.beforeInsert()
         encodePassword()
     }
 

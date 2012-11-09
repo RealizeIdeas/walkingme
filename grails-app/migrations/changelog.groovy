@@ -213,4 +213,326 @@ databaseChangeLog = {
     changeSet(author: "ami (generated)", id: "1352475953630-15") {
         addForeignKeyConstraint(baseColumnNames: "user_id", baseTableName: "user_role", constraintName: "FK143BF46AAA9FDF3C", deferrable: "false", initiallyDeferred: "false", referencedColumnNames: "id", referencedTableName: "user", referencesUniqueColumn: "false")
     }
+
+    changeSet(author: "ami (generated)", id: "1352492172160-1") {
+        createTable(tableName: "category") {
+            column(autoIncrement: "true", name: "id", type: "bigint") {
+                constraints(nullable: "false", primaryKey: "true", primaryKeyName: "categoryPK")
+            }
+
+            column(name: "version", type: "bigint") {
+                constraints(nullable: "false")
+            }
+
+            column(name: "title_id", type: "bigint") {
+                constraints(nullable: "false")
+            }
+        }
+    }
+
+    changeSet(author: "ami (generated)", id: "1352492172160-2") {
+        createTable(tableName: "checkin") {
+            column(autoIncrement: "true", name: "id", type: "bigint") {
+                constraints(nullable: "false", primaryKey: "true", primaryKeyName: "checkinPK")
+            }
+
+            column(name: "version", type: "bigint") {
+                constraints(nullable: "false")
+            }
+
+            column(name: "place_id", type: "bigint") {
+                constraints(nullable: "false")
+            }
+
+            column(name: "user_id", type: "bigint") {
+                constraints(nullable: "false")
+            }
+        }
+    }
+
+    changeSet(author: "ami (generated)", id: "1352492172160-3") {
+        createTable(tableName: "keywords") {
+            column(autoIncrement: "true", name: "id", type: "bigint") {
+                constraints(nullable: "false", primaryKey: "true", primaryKeyName: "keywordsPK")
+            }
+
+            column(name: "version", type: "bigint") {
+                constraints(nullable: "false")
+            }
+
+            column(name: "category_id", type: "bigint") {
+                constraints(nullable: "false")
+            }
+
+            column(name: "created_by", type: "varchar(255)")
+
+            column(name: "date_created", type: "datetime") {
+                constraints(nullable: "false")
+            }
+
+            column(name: "last_updated", type: "datetime") {
+                constraints(nullable: "false")
+            }
+
+            column(name: "title", type: "varchar(255)") {
+                constraints(nullable: "false")
+            }
+
+            column(name: "user_id", type: "bigint") {
+                constraints(nullable: "false")
+            }
+        }
+    }
+
+    changeSet(author: "ami (generated)", id: "1352492172160-4") {
+        createTable(tableName: "photo") {
+            column(autoIncrement: "true", name: "id", type: "bigint") {
+                constraints(nullable: "false", primaryKey: "true", primaryKeyName: "photoPK")
+            }
+
+            column(name: "version", type: "bigint") {
+                constraints(nullable: "false")
+            }
+
+            column(name: "absoluteurl", type: "varchar(255)") {
+                constraints(nullable: "false")
+            }
+
+            column(name: "name", type: "varchar(255)")
+
+            column(name: "place_id", type: "bigint") {
+                constraints(nullable: "false")
+            }
+        }
+    }
+
+    changeSet(author: "ami (generated)", id: "1352492172160-5") {
+        createTable(tableName: "place") {
+            column(autoIncrement: "true", name: "id", type: "bigint") {
+                constraints(nullable: "false", primaryKey: "true", primaryKeyName: "placePK")
+            }
+
+            column(name: "version", type: "bigint") {
+                constraints(nullable: "false")
+            }
+
+            column(name: "description", type: "varchar(5000)")
+
+            column(name: "location_id", type: "bigint") {
+                constraints(nullable: "false")
+            }
+
+            column(name: "ranking", type: "bigint")
+
+            column(name: "telephone", type: "varchar(255)")
+
+            column(name: "title", type: "varchar(255)") {
+                constraints(nullable: "false")
+            }
+
+            column(name: "websiteurl", type: "varchar(255)")
+        }
+    }
+
+    changeSet(author: "ami (generated)", id: "1352492172160-6") {
+        createTable(tableName: "review") {
+            column(autoIncrement: "true", name: "id", type: "bigint") {
+                constraints(nullable: "false", primaryKey: "true", primaryKeyName: "reviewPK")
+            }
+
+            column(name: "version", type: "bigint") {
+                constraints(nullable: "false")
+            }
+
+            column(name: "likes", type: "integer") {
+                constraints(nullable: "false")
+            }
+
+            column(name: "message", type: "varchar(5000)") {
+                constraints(nullable: "false")
+            }
+
+            column(name: "place_id", type: "bigint") {
+                constraints(nullable: "false")
+            }
+
+            column(name: "ranking", type: "bigint") {
+                constraints(nullable: "false")
+            }
+
+            column(name: "title", type: "varchar(255)") {
+                constraints(nullable: "false")
+            }
+
+            column(name: "user_id", type: "bigint")
+        }
+    }
+
+    changeSet(author: "ami (generated)", id: "1352492172160-7") {
+        createTable(tableName: "translatable") {
+            column(autoIncrement: "true", name: "id", type: "bigint") {
+                constraints(nullable: "false", primaryKey: "true", primaryKeyName: "translatablePK")
+            }
+
+            column(name: "version", type: "bigint") {
+                constraints(nullable: "false")
+            }
+        }
+    }
+
+    changeSet(author: "ami (generated)", id: "1352492172160-8") {
+        createTable(tableName: "translatable_string") {
+            column(autoIncrement: "true", name: "id", type: "bigint") {
+                constraints(nullable: "false", primaryKey: "true", primaryKeyName: "translatable_PK")
+            }
+
+            column(name: "version", type: "bigint") {
+                constraints(nullable: "false")
+            }
+
+            column(name: "language_id", type: "varchar(255)") {
+                constraints(nullable: "false")
+            }
+
+            column(name: "translatable_id", type: "bigint") {
+                constraints(nullable: "false")
+            }
+
+            column(name: "value", type: "varchar(255)") {
+                constraints(nullable: "false")
+            }
+        }
+    }
+
+    changeSet(author: "ami (generated)", id: "1352492172160-9") {
+        addColumn(tableName: "user") {
+            column(name: "created_by", type: "varchar(255)")
+        }
+    }
+
+    changeSet(author: "ami (generated)", id: "1352492172160-10") {
+        addColumn(tableName: "user") {
+            column(name: "date_created", type: "datetime") {
+                constraints(nullable: "false")
+            }
+        }
+    }
+
+    changeSet(author: "ami (generated)", id: "1352492172160-11") {
+        addColumn(tableName: "user") {
+            column(name: "last_updated", type: "datetime") {
+                constraints(nullable: "false")
+            }
+        }
+    }
+
+    changeSet(author: "ami (generated)", id: "1352492172160-12") {
+        dropNotNullConstraint(columnDataType: "datetime", columnName: "birthday", tableName: "user")
+    }
+
+    changeSet(author: "ami (generated)", id: "1352492172160-13") {
+        createIndex(indexName: "FK302BCFE894F901", tableName: "category") {
+            column(name: "title_id")
+        }
+    }
+
+    changeSet(author: "ami (generated)", id: "1352492172160-14") {
+        createIndex(indexName: "FK2C3ED02D2A27920C", tableName: "checkin") {
+            column(name: "place_id")
+        }
+    }
+
+    changeSet(author: "ami (generated)", id: "1352492172160-15") {
+        createIndex(indexName: "FK2C3ED02DAA9FDF3C", tableName: "checkin") {
+            column(name: "user_id")
+        }
+    }
+
+    changeSet(author: "ami (generated)", id: "1352492172160-16") {
+        createIndex(indexName: "FK1F2E9FAAAA9FDF3C", tableName: "keywords") {
+            column(name: "user_id")
+        }
+    }
+
+    changeSet(author: "ami (generated)", id: "1352492172160-17") {
+        createIndex(indexName: "FK1F2E9FAAD1D3016A", tableName: "keywords") {
+            column(name: "category_id")
+        }
+    }
+
+    changeSet(author: "ami (generated)", id: "1352492172160-18") {
+        createIndex(indexName: "FK65B3E322A27920C", tableName: "photo") {
+            column(name: "place_id")
+        }
+    }
+
+    changeSet(author: "ami (generated)", id: "1352492172160-19") {
+        createIndex(indexName: "FK65CD9073E6293E9", tableName: "place") {
+            column(name: "location_id")
+        }
+    }
+
+    changeSet(author: "ami (generated)", id: "1352492172160-20") {
+        createIndex(indexName: "FKC84EF7582A27920C", tableName: "review") {
+            column(name: "place_id")
+        }
+    }
+
+    changeSet(author: "ami (generated)", id: "1352492172160-21") {
+        createIndex(indexName: "FKC84EF758AA9FDF3C", tableName: "review") {
+            column(name: "user_id")
+        }
+    }
+
+    changeSet(author: "ami (generated)", id: "1352492172160-22") {
+        createIndex(indexName: "FK9E3B903F5C7C6CE8", tableName: "translatable_string") {
+            column(name: "translatable_id")
+        }
+    }
+
+    changeSet(author: "ami (generated)", id: "1352492172160-23") {
+        createIndex(indexName: "FK143BF46A5751B5C", tableName: "user_role") {
+            column(name: "role_id")
+        }
+    }
+
+    changeSet(author: "ami (generated)", id: "1352492172160-24") {
+        addForeignKeyConstraint(baseColumnNames: "title_id", baseTableName: "category", constraintName: "FK302BCFE894F901", deferrable: "false", initiallyDeferred: "false", referencedColumnNames: "id", referencedTableName: "translatable", referencesUniqueColumn: "false")
+    }
+
+    changeSet(author: "ami (generated)", id: "1352492172160-25") {
+        addForeignKeyConstraint(baseColumnNames: "place_id", baseTableName: "checkin", constraintName: "FK2C3ED02D2A27920C", deferrable: "false", initiallyDeferred: "false", referencedColumnNames: "id", referencedTableName: "place", referencesUniqueColumn: "false")
+    }
+
+    changeSet(author: "ami (generated)", id: "1352492172160-26") {
+        addForeignKeyConstraint(baseColumnNames: "user_id", baseTableName: "checkin", constraintName: "FK2C3ED02DAA9FDF3C", deferrable: "false", initiallyDeferred: "false", referencedColumnNames: "id", referencedTableName: "user", referencesUniqueColumn: "false")
+    }
+
+    changeSet(author: "ami (generated)", id: "1352492172160-27") {
+        addForeignKeyConstraint(baseColumnNames: "category_id", baseTableName: "keywords", constraintName: "FK1F2E9FAAD1D3016A", deferrable: "false", initiallyDeferred: "false", referencedColumnNames: "id", referencedTableName: "category", referencesUniqueColumn: "false")
+    }
+
+    changeSet(author: "ami (generated)", id: "1352492172160-28") {
+        addForeignKeyConstraint(baseColumnNames: "user_id", baseTableName: "keywords", constraintName: "FK1F2E9FAAAA9FDF3C", deferrable: "false", initiallyDeferred: "false", referencedColumnNames: "id", referencedTableName: "user", referencesUniqueColumn: "false")
+    }
+
+    changeSet(author: "ami (generated)", id: "1352492172160-29") {
+        addForeignKeyConstraint(baseColumnNames: "place_id", baseTableName: "photo", constraintName: "FK65B3E322A27920C", deferrable: "false", initiallyDeferred: "false", referencedColumnNames: "id", referencedTableName: "place", referencesUniqueColumn: "false")
+    }
+
+    changeSet(author: "ami (generated)", id: "1352492172160-30") {
+        addForeignKeyConstraint(baseColumnNames: "location_id", baseTableName: "place", constraintName: "FK65CD9073E6293E9", deferrable: "false", initiallyDeferred: "false", referencedColumnNames: "id", referencedTableName: "location", referencesUniqueColumn: "false")
+    }
+
+    changeSet(author: "ami (generated)", id: "1352492172160-31") {
+        addForeignKeyConstraint(baseColumnNames: "place_id", baseTableName: "review", constraintName: "FKC84EF7582A27920C", deferrable: "false", initiallyDeferred: "false", referencedColumnNames: "id", referencedTableName: "place", referencesUniqueColumn: "false")
+    }
+
+    changeSet(author: "ami (generated)", id: "1352492172160-32") {
+        addForeignKeyConstraint(baseColumnNames: "user_id", baseTableName: "review", constraintName: "FKC84EF758AA9FDF3C", deferrable: "false", initiallyDeferred: "false", referencedColumnNames: "id", referencedTableName: "user", referencesUniqueColumn: "false")
+    }
+
+    changeSet(author: "ami (generated)", id: "1352492172160-33") {
+        addForeignKeyConstraint(baseColumnNames: "translatable_id", baseTableName: "translatable_string", constraintName: "FK9E3B903F5C7C6CE8", deferrable: "false", initiallyDeferred: "false", referencedColumnNames: "id", referencedTableName: "translatable", referencesUniqueColumn: "false")
+    }
 }
