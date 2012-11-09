@@ -65,21 +65,21 @@ basePath = System.properties['base.dir']
 environments {
     development {
         grails.logging.jul.usebridge = true
-        grails.plugins.springsocial.facebook.clientId = "478732525471377"
-        grails.plugins.springsocial.facebook.clientSecret = "cd3e5f402a4923f02bf3e0f28367f85f"
+        grails.plugins.springsocial.facebook.clientId = "101900146642118"
+        grails.plugins.springsocial.facebook.clientSecret = "31a92a00e7144bb3b4d45e8253f4d5a0"
         grails.serverURL = "http://localhost:8080/walkingme"
     }
     test {
-        grails.plugins.springsocial.facebook.clientId = "166470550161909"
-        grails.plugins.springsocial.facebook.clientSecret = "6653351a81af90272ef716c3b4af249b"
+        grails.plugins.springsocial.facebook.clientId = "476389125745449"
+        grails.plugins.springsocial.facebook.clientSecret = "e6477ad7ddd32b61537b407390c230e0"
         basePath = System.properties['catalina.base'] + "/webapps/ROOT"
         grails.serverURL = "http://walkingme.realizeideas.net"
     }
     production {
         grails.logging.jul.usebridge = false
         grails.serverURL = "http://www.walkingme.com"
-        grails.plugins.springsocial.facebook.clientId = "485051521522395"
-        grails.plugins.springsocial.facebook.clientSecret = "05a62c08c926da9d6534de193fb311ab"
+        grails.plugins.springsocial.facebook.clientId = "466216803419591"
+        grails.plugins.springsocial.facebook.clientSecret = "6d8369422272df8185d04b9300554668"
         basePath = System.properties['catalina.base'] + "/webapps/ROOT"
     }
 
