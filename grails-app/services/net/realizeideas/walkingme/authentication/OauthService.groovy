@@ -8,6 +8,9 @@ import org.springframework.social.facebook.api.FqlResultMapper
 import org.springframework.social.facebook.api.FqlResult
 import org.apache.commons.logging.LogFactory
 import org.apache.commons.logging.Log
+import net.realizeideas.walkingme.keywords.Category
+import org.springframework.social.facebook.api.Page
+import net.realizeideas.walkingme.keywords.Keyword
 
 /**
  * @author Michael Astreiko
@@ -51,6 +54,8 @@ class OauthService {
 
             user.email = users ? users[0].email : null
         }
+
+
 //        def profileImage = facebookTemplate.userOperations().getUserProfileImage()
 //        if (profileImage) {
 //            def imageName = "profile_photo.jpg"

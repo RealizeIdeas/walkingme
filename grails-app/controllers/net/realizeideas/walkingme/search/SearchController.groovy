@@ -1,11 +1,8 @@
 package net.realizeideas.walkingme.search
 
 import org.apache.commons.lang.time.StopWatch
-import grails.converters.JSON
 import java.util.concurrent.TimeUnit
 import java.util.concurrent.Executors
-import net.realizeideas.walkingme.places.Place
-import net.realizeideas.walkingme.common.Location
 import net.realizeideas.walkingme.authentication.User
 import org.springframework.context.i18n.LocaleContextHolder
 
@@ -27,7 +24,7 @@ class SearchController {
         User user = User.read(springSecurityService.currentUser?.id)
 
         Query query = new Query()
-        query.keywords = ["pizza"] as Set//user.keywords?.collect{it.title}
+        query.keywords = user.keywords?.collect{it.title}
         query.location = request.cookies.find {it.name == "location"}?.value?.decodeURL()
         query.language = LocaleContextHolder.locale.language
 
@@ -55,14 +52,4 @@ class SearchController {
         }
         render view: "places", model: [places:places]
     }
-
-    def places = {
-        [places:[
-                new Place(publicId: "154643", title: "Titlewwwww", location:new Location(additional: "Minsk city")),
-                new Place(publicId: "4352354", title: "gsdgsdgfsdfg", location:new Location(additional: "Minsk city")),
-                new Place(publicId: "363546", title: "Titlsdfgsdfgewwwww", location:new Location(additional: "Minsk city")),
-                new Place(publicId: "25445", title: "sdfgsdfgsd", location:new Location(additional: "Minsk ddddcity")),
-        ]]
-    }
-
 }

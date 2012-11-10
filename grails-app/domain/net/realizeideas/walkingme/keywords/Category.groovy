@@ -8,7 +8,7 @@ import net.realizeideas.walkingme.common.translatable.Translatable
 class Category {
 
     Translatable title
-    static hasMany = [keywords: Keyword]
+    static hasMany = [keywords: Keyword, facebookCategories:String]
 
     static namedQueries = {
         retrieveByTitle {titleToSearch, langId ->
@@ -24,5 +24,6 @@ class Category {
 
     static constraints = {
         keywords(nullable: true)
+        facebookCategories(nullable: true)
     }
 }
