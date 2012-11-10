@@ -5,11 +5,6 @@
     <title>
         <g:message code="springSecurity.login.title"/>
     </title>
-    <r:script>
-        $("#joinWithFacebook").click(function () {
-            $("#facebookForm").submit();
-        });
-    </r:script>
 </head>
 
 <body>
@@ -39,6 +34,9 @@
 
 <script type="text/javascript">
     $.mobile.ajaxEnabled = false;
+    $("#joinWithFacebook").click(function () {
+            $("#facebookForm").submit();
+        });
     <g:if test='${flash.message}'>
     setTimeout('$("#simplepopup").popup("open")', 500);
     </g:if>
