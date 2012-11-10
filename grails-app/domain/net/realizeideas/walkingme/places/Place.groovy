@@ -7,8 +7,13 @@ import net.realizeideas.walkingme.common.Photo
  * @author Michael Astreiko
  */
 class Place {
+    static transients = ['service', 'distance']
     String title
     String description
+
+    String service
+
+    BigDecimal distance
 
     String telephone
     String websiteURL

@@ -32,6 +32,7 @@ grails.project.dependency.resolution = {
         //Spring Social Google <id>spring.social.google</id>
         mavenRepo "https://github.com/GabiAxel/maven/raw/master"
         mavenRepo "https://artifacts.alfresco.com/nexus"
+        mavenRepo "http://maven.mse.jhu.edu/m2repository/"
 
         // uncomment these (or add new ones) to enable remote dependency resolution from public Maven repositories
         //mavenRepo "http://snapshots.repository.codehaus.org"
@@ -61,6 +62,8 @@ grails.project.dependency.resolution = {
         build 'org.apache.httpcomponents:httpclient:4.1.1'
         runtime 'org.apache.httpcomponents:httpcore:4.1'
         runtime 'org.apache.httpcomponents:httpclient:4.1.1'
+        compile 'commons-httpclient:commons-httpclient:3.1'
+        compile 'uk.ac.shef.wit:simmetrics:1.6.2'
     }
 
     plugins {
