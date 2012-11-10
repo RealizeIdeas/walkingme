@@ -54,8 +54,11 @@ class UserController {
             redirect(action: "list")
             return
         }
-
-        buildModel(userInstance)
+        String view = 'edit'
+        withMobileDevice {
+            view = 'm_edit'
+        }
+        render view: view, model: buildModel(userInstance)
     }
 
 

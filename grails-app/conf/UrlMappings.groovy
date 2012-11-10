@@ -7,7 +7,7 @@ class UrlMappings {
             }
         }
 
-        "/"(view: "/login/join")
+        "/"(controller: "login", action:"join")
         "500"(view: '/error')
 
         name springOAuthSocialSignIn: "/ssoasignin/$providerId/$providerUserId?" {

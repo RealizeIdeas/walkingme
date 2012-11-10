@@ -87,5 +87,7 @@ grails.project.dependency.resolution = {
         compile(":spring-social-twitter:0.1.31") { // keept to avoid compilation problem and right spring loading order
             excludes "spring-security-core", "spring-social-twitter"
         }
+
+        compile ":spring-mobile:0.4"
     }
 }
