@@ -26,12 +26,5 @@
   <input type="hidden" name="scope" value="${AppConstants.FACEBOOK_PERMISSIONS}"/>
 </g:form>
 
-<script type='text/javascript'>
-  <!--
-  (function () {
-    document.forms['loginForm'].elements['j_username'].focus();
-  })();
-  // -->
-</script>
 </body>
 </html>

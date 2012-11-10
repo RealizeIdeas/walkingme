@@ -39,7 +39,11 @@ class LoginController {
     }
 
     def join = {
-
+        String view = 'join'
+        withMobileDevice {
+            view = 'm_join'
+        }
+        render view: view, params: params
     }
     /**
      * Show the login page.
@@ -83,7 +87,8 @@ class LoginController {
      */
     def full = {
         def config = SpringSecurityUtils.securityConfig
-        render view: 'auth', params: params,
+        String view = 'auth'
+        render view: view, params: params,
                 model: [hasCookie: authenticationTrustResolver.isRememberMe(SCH.context?.authentication),
                         postUrl: "${request.contextPath}${config.apf.filterProcessesUrl}"]
     }
