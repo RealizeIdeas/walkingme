@@ -9,24 +9,77 @@ import net.realizeideas.walkingme.common.Location
 import net.realizeideas.walkingme.common.Photo
 
 class PlaceService {
+    def grailsApplication
 
-    def getFourSquarePlaceDetails(venueId) {
+    Place getGooglePlaceDetails(venueId) {
         def venueJson
-        def http = new HTTPBuilder("https://api.foursquare.com")
-        http.request( GET, ContentType.TEXT ) {
-            uri.path = "/v2/venues/${venueId}"
-            uri.query = [client_id: grailsApplication.config.foursquare.clientId, client_secret: grailsApplication.config.foursquare.clientSecret]
+        def http = new HTTPBuilder("https://maps.googleapis.com")
+        http.request(GET, ContentType.TEXT) {
+            uri.path = "/maps/api/place/details/json"
+            uri.query = [reference: venueId, sensor: false,
+                    key: grailsApplication.config.google.places.apiKey]
 
             response.success = { resp, reader ->
                 def searchResult = reader.text
-                venueJson = JSON.parse(searchResult)
+                venueJson = JSON.parse(searchResult)?.result
             }
         }
         if (log.isInfoEnabled()) {
-            log.info("foursquareResult: ${venueJson?.toString()}")
+            log.info("Google Result: ${venueJson?.toString()}")
         }
 
-        def place = retrieveFoursquarePlace(venueJson)
+        return retrieveGooglePlace(venueJson)
+    }
+
+    Place getFourSquarePlaceDetails(venueId) {
+        def venueJson
+        def http = new HTTPBuilder("https://api.foursquare.com")
+        http.request(GET, ContentType.TEXT) {
+            uri.path = "/v2/venues/${venueId}"
+            uri.query = [client_id: grailsApplication.config.foursquare.clientId,v:'20121111',
+                    client_secret: grailsApplication.config.foursquare.clientSecret]
+
+            response.success = { resp, reader ->
+                def searchResult = reader.text
+                venueJson = JSON.parse(searchResult)?.response?.venue
+            }
+        }
+//        if (log.isInfoEnabled()) {
+            log.error("foursquareResult: ${venueJson?.toString()}")
+//        }
+
+        return retrieveFoursquarePlace(venueJson)
+    }
+
+    private Place retrieveGooglePlace(venueJson) {
+        Place place = new Place()
+        place.title = venueJson.name
+        place.publicId = venueJson.id
+        place.service = "Google"
+        place.title = venueJson.name
+        place.websiteURL = venueJson.website
+
+        place.location = retrieveGoogleLocation(venueJson)
+        place.telephone = venueJson.international_phone_number
+
+        place.ranking = venueJson.rating
+        return place
+    }
+
+    private Location retrieveGoogleLocation(venueJson) {
+        println "venueJson: $venueJson"
+        def addresses = venueJson.address_components
+        addresses.each{println it}
+        Location location = new Location()
+        location.latitude = new BigDecimal(venueJson.geometry.location.lat)
+        location.longitude = new BigDecimal(venueJson.geometry.location.lng)
+        location.city = addresses.find{it.types.contains('locality')}?.long_name
+        location.street = addresses.find{it.types.contains('route')}?.long_name + " " + addresses.find{it.types.contains('route')}?.street_number
+        location.postalCode = addresses.find{it.types.contains('postal_code')}?.long_name
+        location.countryCode = addresses.find{it.types.contains('country')}?.long_name
+        location.additional = venueJson.formatted_address
+
+        return location
     }
 
     private Place retrieveFoursquarePlace(venueJson) {
@@ -43,7 +96,7 @@ class PlaceService {
         place.distance = venueJson.location.distance
         place.ranking = venueJson.rating
         place.photos = retrieveFoursquarePhotos(venueJson.photos)
-
+        return place
     }
 
     private Location retrieveFoursquareLocation(foresquareLocation) {

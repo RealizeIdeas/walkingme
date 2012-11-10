@@ -24,7 +24,7 @@ class SearchController {
         User user = User.read(springSecurityService.currentUser?.id)
 
         Query query = new Query()
-        query.keywords = user.keywords?.collect{it.title}
+        query.keywords = ["pizza"] as Set//user.keywords?.collect{it.title}
         query.location = request.cookies.find {it.name == "location"}?.value?.decodeURL()
         query.language = LocaleContextHolder.locale.language
 

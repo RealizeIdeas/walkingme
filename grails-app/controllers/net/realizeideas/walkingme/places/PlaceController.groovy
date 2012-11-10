@@ -4,11 +4,15 @@ class PlaceController {
 
     def placeService
 
-    def show = {
+    def show() {
+        Place place
         if (params.service.equals("Foursquare")) {
-            def place = placeService.getFoursquarePlaceDetils(params.publicId)
+            place = placeService.getFourSquarePlaceDetails(params.publicId)
         } else if (params.service.equals("Google")) {
-
+            place = placeService.getGooglePlaceDetails(params.publicId)
         }
+
+
+        render(view: "show", model: [placeInstance:place])
     }
 }

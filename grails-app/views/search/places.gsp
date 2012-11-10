@@ -83,7 +83,7 @@
       <g:each in="${places}" var="place" status="i">
         <div id="place${place.publicId}" class="place">
           <div class="description">
-            <h5><g:link controller="place" action="show" params="[publicId: place?.publicId, service: place?.service]">
+            <h5><g:link controller="place" action="show" params="[publicId: place?.reference, service: place?.service]">
               ${place.title?.encodeAsHTML()} ${place.service}
             </g:link></h5>
 
@@ -117,7 +117,7 @@
               marker${place.publicId}.setIcon(iconPath);
             });
             google.maps.event.addListener(marker${place.publicId}, "click", function() {
-              window.location = "${createLink(controller: 'place', action: 'show', params: [publicId: place?.publicId, service: place?.service])}";
+              window.location = "${createLink(controller: 'place', action: 'show', params: [publicId: place?.reference, service: place?.service])}";
           });
 
         //Draw tooltips

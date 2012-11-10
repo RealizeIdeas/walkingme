@@ -38,7 +38,7 @@ class GooglePlacesSearchService implements PlacesSearchExecutor {
         List places = []
         StopWatch stopWatch = new StopWatch()
         stopWatch.start()
-        while (keywords.size() > 1 && places.size() < 5) {
+        while (keywords.size() > 0 && places.size() < 5) {
             def keyword = keywords?.join("|")
             keyword = keyword.trim()
 
@@ -93,6 +93,7 @@ class GooglePlacesSearchService implements PlacesSearchExecutor {
                 try {
                     Place place = new Place()
                     place.publicId = googlePlace.id
+                    place.reference = googlePlace.reference
                     place.service = "Google"
                     if (Place.findByPublicIdAndService(place.publicId, place.service)) {
                         place = Place.findByPublicIdAndService(place.publicId, place.service)
