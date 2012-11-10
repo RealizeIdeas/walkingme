@@ -1,4 +1,4 @@
-package net.realizeideas.walkingme.authentication
+package net.realizeideas.walkingme.authentication.springsocial
 
 import org.codehaus.groovy.grails.web.servlet.mvc.GrailsWebRequest
 import org.springframework.social.connect.Connection
@@ -6,6 +6,9 @@ import net.realizeideas.walkingme.authentication.oauth.OAuthGrailsConnectSupport
 import grails.plugins.springsocial.UserConnection
 import org.springframework.social.connect.DuplicateConnectionException
 import org.springframework.social.connect.ConnectionKey
+import net.realizeideas.walkingme.authentication.User
+import net.realizeideas.walkingme.authentication.UserRole
+import net.realizeideas.walkingme.authentication.Role
 
 /**
  * Base Controller to handle OAuth 2 register/sigh in
