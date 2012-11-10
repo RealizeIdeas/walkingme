@@ -8,6 +8,8 @@ import net.realizeideas.walkingme.common.Photo
  */
 class Place {
     static transients = ['service', 'distance']
+    //Id from Service
+    String publicId
     String title
     String description
 
@@ -30,6 +32,7 @@ class Place {
         reviews(nullable: true)
         photos(nullable: true)
         checkins(nullable: true)
+        publicId(unique: 'service')
     }
 }
 

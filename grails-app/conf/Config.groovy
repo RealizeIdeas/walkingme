@@ -61,7 +61,7 @@ grails.exceptionresolver.params.exclude = ['password']
 grails.hibernate.cache.queries = false
 
 basePath = System.properties['base.dir']
-
+google.places.apiKey="AIzaSyA71BFIm8HQtw4izv80TzFCIZscoRMPSN4"
 environments {
     development {
         grails.logging.jul.usebridge = true

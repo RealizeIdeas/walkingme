@@ -68,15 +68,6 @@ class SearchService {
         }
     }
 
-    Query retrieveQuery(int searchMode, categoryId, String queryParam) {
-        Query query = new Query()
-
-        query.freeText = queryParam
-
-        return query
-    }
-
-
     private BigDecimal distanceBetweenPlaces(Place place1, Place place2) {
         return distanceService.calculateDistanceInMeters(place1.location?.latitude, place1.location?.longitude,
                 place2.location?.latitude, place2.location?.longitude)
