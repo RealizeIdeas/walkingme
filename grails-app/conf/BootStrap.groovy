@@ -2,6 +2,8 @@ import net.realizeideas.walkingme.authentication.UserRole
 import net.realizeideas.walkingme.authentication.User
 import net.realizeideas.walkingme.authentication.Role
 import net.realizeideas.walkingme.authentication.Requestmap
+import net.realizeideas.walkingme.common.translatable.Translatable
+import net.realizeideas.walkingme.keywords.Category
 
 class BootStrap {
 
@@ -21,6 +23,12 @@ class BootStrap {
         createRequestMap("/user/board", "IS_AUTHENTICATED_ANONYMOUSLY")
         createRequestMap("/requestmap/**", "ROLE_ADMIN")
 
+        createCategory("Foods", "en")
+        createCategory("Sports", "en")
+        createCategory("Intertainment", "en")
+        createCategory("Music", "en")
+        createCategory("Shopping", "en")
+
     }
 
     void createRequestMap(String url, String configAtt) {
@@ -28,6 +36,25 @@ class BootStrap {
             new Requestmap(url: url, configAttribute: configAtt).save()
         }
     }
+
+    void createCategory(String title, String language) {
+        if (!Category.retrieveByTitle(title, language)) {
+            new Category(title: createTranslations([language:title])).save(failOnError: true, flush: true)
+        }
+    }
+
+    private Translatable createTranslations(Map keyValueTranslations) {
+
+        Translatable translatable = new Translatable()
+        keyValueTranslations?.each {key, value ->
+            translatable.addValue(key, value)
+        }
+        translatable.save()
+        return translatable
+    }
+
+
+
 
     def destroy = {
     }
