@@ -36,8 +36,16 @@ environments {
         }
     }
     production {
+        def envVar = System.env.VCAP_SERVICES
+        def credentials = envVar ? grails.converters.JSON.parse(envVar)["mysql-5.1"][0]["credentials"] : null
+
         dataSource {
-            url = "jdbc:mysql://127.0.0.1:3306/walkingme?useUnicode=yes&characterEncoding=UTF-8"
+            url = credentials ? "jdbc:mysql://${credentials.hostname}:${credentials.port}/${credentials.name}?useUnicode=yes&characterEncoding=UTF-8" : ""
+            username = credentials ? credentials.username : ""
+            password = credentails ? credentials.password : ""
+        }
+//        dataSource {
+//            url = "jdbc:mysql://127.0.0.1:3306/walkingme?useUnicode=yes&characterEncoding=UTF-8"
 //            username = "bbdashboard"
 //            password = "bbdashboard"
 //            pooled = true
@@ -51,6 +59,6 @@ environments {
 //                testOnReturn = true
 //                validationQuery = "SELECT 1"
 //            }
-        }
+//        }
     }
 }
