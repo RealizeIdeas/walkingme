@@ -6,6 +6,7 @@ import static groovyx.net.http.Method.GET
 import groovyx.net.http.ContentType
 import grails.converters.JSON
 import net.realizeideas.walkingme.common.Location
+import net.realizeideas.walkingme.common.Photo
 
 class PlaceService {
 
@@ -40,6 +41,8 @@ class PlaceService {
         place.telephone = venueJson.contact?.formattedPhone
 
         place.distance = venueJson.location.distance
+        place.ranking = venueJson.rating
+        place.photos = retrieveFoursquarePhotos(venueJson.photos)
 
     }
 
@@ -54,5 +57,16 @@ class PlaceService {
         location.countryCode = foresquareLocation.cc
 
         return location
+    }
+
+    private List retrieveFoursquarePhotos(photos) {
+        def result = []
+        photos?.groups?.find{it.type == "venue"}?.items?.each { item ->
+            Photo photo = new Photo()
+            photo.absoluteURL = "${item.prefix}/300x300/${item.suffix}"
+            result << photo
+        }
+        return result
+
     }
 }
