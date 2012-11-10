@@ -10,10 +10,48 @@
 <html>
 <head>
     <meta name='layout' content='mobile'/>
-    <g:set var="entityName" value="${message(code: 'user.label', default: 'User')}"/>
     <title><g:message code="default.edit.label" args="[entityName]"/></title>
 </head>
-<body>
 
+<body>
+<div data-theme="a" data-role="header">
+    <a id="okBtn" data-role="button" href="" class="ui-btn-right">
+        OK
+    </a>
+    <h3 id="settings">
+        Settings
+    </h3>
+</div>
+
+<ul id="CategoriesList" data-role="listview" data-divider-theme="b" data-inset="true">
+    <li data-role="list-divider" role="heading">
+        Categories
+    </li>
+
+    <g:each in="${categories}"
+                      status="i" var="category">
+    <li data-icon="arrow-r" data-iconpos="right">
+        <g:link controller="category" action="show" id="${category.id}"  data-transition="slide">${category.title?.getValue("en")}</g:link>
+    </li>
+    </g:each>
+</ul>
+
+<div data-role="content">
+    <div data-role="fieldcontain">
+        <fieldset data-role="controlgroup">
+            <label for="publishToggle">
+                Publish on wall
+            </label>
+            <select name="publishToggle" id="publishToggle" data-theme="b" data-role="slider">
+                <option value="off">
+                    Off
+                </option>
+                <option value="on" selected="selected">
+                    On
+                </option>
+            </select>
+        </fieldset>
+    </div>
+</div>
 </body>
 </html>
