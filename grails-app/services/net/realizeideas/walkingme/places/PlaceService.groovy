@@ -44,9 +44,9 @@ class PlaceService {
                 venueJson = JSON.parse(searchResult)?.response?.venue
             }
         }
-//        if (log.isInfoEnabled()) {
-            log.error("foursquareResult: ${venueJson?.toString()}")
-//        }
+        if (log.isInfoEnabled()) {
+            log.info("foursquareResult: ${venueJson?.toString()}")
+        }
 
         return retrieveFoursquarePlace(venueJson)
     }
@@ -67,7 +67,6 @@ class PlaceService {
     }
 
     private Location retrieveGoogleLocation(venueJson) {
-        println "venueJson: $venueJson"
         def addresses = venueJson.address_components
         addresses.each{println it}
         Location location = new Location()
