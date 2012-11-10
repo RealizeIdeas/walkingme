@@ -27,8 +27,8 @@ class SearchController {
         User user = User.read(springSecurityService.currentUser?.id)
 
         Query query = new Query()
-        query.keywords = user.keywords?.collect{it.title}
-        query.location = request.cookies.find {it.name == "location"}?.value
+        query.keywords = ["pizza"] as Set//user.keywords?.collect{it.title}
+        query.location = request.cookies.find {it.name == "location"}?.value?.decodeURL()
         query.language = LocaleContextHolder.locale.language
 
         List<SearchResult> searchResults = []
@@ -47,19 +47,13 @@ class SearchController {
         if (!threadPool.awaitTermination(1, TimeUnit.MINUTES)) {
             log.warn "Executors making search for more than 1 min, so they will be shut down..."
         }
-        def venues = searchService.mergeAndSortResults(searchResults)
 
+        def places = searchService.mergeAndSortResults(searchResults)
         stopWatch.stop()
         if (log.isInfoEnabled()) {
-            log.info "Time executing search for keyword ${query.freeText} is ${stopWatch.toString()}"
+            log.info "Time executing search for keyword ${query.keywords?.join(";")} is ${stopWatch.toString()}"
         }
-        def result = [meta: [code: 200], response: [:]]
-        result.response['venues'] = venues ?: null
-        if (venues) {
-            result.response['count'] = venues.size()
-        }
-        def converter = result as JSON
-        render text: converter.toString(), contentType: 'application/json'
+        render view: "places", model: [places:places]
     }
 
     def places = {

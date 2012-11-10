@@ -595,4 +595,44 @@ a.skip {
 	left: -9999px;
 }
 
+#searchResultMapHolder {
+    /*position: absolute;*/
+    /*margin-left: 624px;*/
+    /*top: 145px;*/
+}
+#searchResultMap {
+    width: 960px;
+    height: 300px;
+}
+
+.mapTooltip {
+    background: none repeat scroll 0 0 #2D2D2D;
+    width: auto;
+    white-space: nowrap;
+    padding: 5px 10px;
+    font-size: 11px;
+    position: absolute;
+    color: #ffffff;
+}
+
+#placesList {
+    height: 500px;
+    overflow-y: scroll;
+    overflow-x: hidden;
+}
+
+.searchResult .place {
+   width: 45%;
+    padding: 10px;
+    float: left;
+    margin-left: 20px;
+}
+
+.searchResult .place:hover {
+    background-color: #DDD;
+}
+#currentLocationMap {
+    width: 400px;
+    height: 400px;
+}
 

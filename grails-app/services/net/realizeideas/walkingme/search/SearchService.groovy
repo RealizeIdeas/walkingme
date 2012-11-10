@@ -11,6 +11,7 @@ class SearchService {
     static transactional = false
     def distanceService
 
+    static final int LIMIT_OF_PLACES = 20
     static final int TWO_HUNDRED_METERS = 200
     static final long SIMILARITY_BOUNDARY = 0.98 as long
 
@@ -25,10 +26,14 @@ class SearchService {
      * @return merged and sorted Places
      */
     List<Place> mergeAndSortResults(List<SearchResult> searchResults) {
-        List<Place> resultedPlaces = []
+        List<Place> resultedPlaces = searchResults*.resultList?.flatten()
 
         mergePlaces(resultedPlaces)
-        return sortPlaces(resultedPlaces)
+        def sortedPlaces = sortPlaces(resultedPlaces)
+        if(LIMIT_OF_PLACES < sortedPlaces.size()){
+            sortedPlaces = sortedPlaces[0..(LIMIT_OF_PLACES-1)]
+        }
+        return sortedPlaces
     }
 
     /**

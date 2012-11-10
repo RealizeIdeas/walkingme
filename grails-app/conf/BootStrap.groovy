@@ -19,9 +19,12 @@ class BootStrap {
             UserRole.create(admUser, adminRole, true)
         }
 
-        createRequestMap("/user/**", "IS_AUTHENTICATED_REMEMBERED")
-        createRequestMap("/user/smallBoard", "IS_AUTHENTICATED_ANONYMOUSLY")
-        createRequestMap("/user/board", "IS_AUTHENTICATED_ANONYMOUSLY")
+        createRequestMap("/search/**", "IS_AUTHENTICATED_REMEMBERED")
+        createRequestMap("/login/**", "IS_AUTHENTICATED_REMEMBERED")
+        createRequestMap("/category/**", "IS_AUTHENTICATED_REMEMBERED")
+        createRequestMap("/place/**", "IS_AUTHENTICATED_REMEMBERED")
+        createRequestMap("/login/join", "IS_AUTHENTICATED_ANONYMOUSLY")
+        createRequestMap("/login/auth", "IS_AUTHENTICATED_ANONYMOUSLY")
         createRequestMap("/requestmap/**", "ROLE_ADMIN")
 
         createCategory("Foods", "en")
