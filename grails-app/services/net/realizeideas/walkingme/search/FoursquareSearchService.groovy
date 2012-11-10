@@ -17,8 +17,6 @@ class FoursquareSearchService implements PlacesSearchExecutor {
 
     SearchResult search(Query query) {
         def foursquareResult
-        def keyword = query.freeText
-        keyword = keyword.trim()
 
         StopWatch stopWatch = new StopWatch()
         stopWatch.start()
@@ -28,7 +26,7 @@ class FoursquareSearchService implements PlacesSearchExecutor {
         def http = new HTTPBuilder("https://api.foursquare.com")
         http.request( GET, ContentType.TEXT ) {
             uri.path = '/v2/venues/search'
-            uri.query = [ll: query.location, intent: 'browse', radius: '100000', query: keyword, v: df.format(now),
+            uri.query = [ll: query.location, intent: 'browse', radius: '100000', query: query.keywords.join(" "), v: df.format(now),
                          client_id: grailsApplication.config.foursquare.clientId, client_secret: grailsApplication.config.foursquare.clientSecret]
 
             response.success = { resp, reader ->
@@ -45,13 +43,11 @@ class FoursquareSearchService implements PlacesSearchExecutor {
         stopWatch.stop()
 
         if (log.isInfoEnabled()) {
-            log.info("Foursquare search with query ${keyword} and location ${query.location} took ${stopWatch.toString()}")
+            log.info("Foursquare search with query ${query.keywords.join(" ")} and location ${query.location} took ${stopWatch.toString()}")
         }
 
         SearchResult searchResult = new SearchResult()
         searchResult.resultList = places
-        searchResult.pageSize = query.max
-        searchResult.offset = query.page * query.max
         searchResult.searchTime = stopWatch.getTime()
         return searchResult
     }
