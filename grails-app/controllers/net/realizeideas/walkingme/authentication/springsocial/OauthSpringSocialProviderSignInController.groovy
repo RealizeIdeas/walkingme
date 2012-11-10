@@ -71,11 +71,15 @@ class OauthSpringSocialProviderSignInController {
                 def facebookTemplate = new FacebookTemplate(user.connection.accessToken)
                 List<Page> pagesLiked = facebookTemplate.likeOperations().getPagesLiked()
                 def categories = Category.list()
-                def allNeededFacebookCategories = categories*.facebookCategories.flatten().toSet()
-                pagesLiked.findAll {page-> allNeededFacebookCategories.any{it.equalsIgnoreCase(page.category)}}?.each {Page page ->
+                def fbCategoryToCategoryMap = [:]
+                categories.each{Category category ->
+                    category.facebookCategories?.each {fbCategoryToCategoryMap[it.toLowerCase()] = category}
+                }
+                def allNeededFacebookCategories = fbCategoryToCategoryMap.keySet()
+                pagesLiked.findAll {allNeededFacebookCategories.contains(it.category.toLowerCase())}?.each {Page page ->
                     Keyword keyword = new Keyword(user: user)
                     keyword.title = page.name
-                    keyword.category = categories.find {category -> category.facebookCategories.any{it.equalsIgnoreCase(page.category)}}
+                    keyword.category = fbCategoryToCategoryMap[page.category.toLowerCase()]
                     keyword.save()
 
                     user.addToKeywords(keyword)
