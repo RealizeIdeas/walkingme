@@ -13,6 +13,7 @@ import net.realizeideas.walkingme.keywords.Keyword
 import net.realizeideas.walkingme.keywords.Category
 import org.springframework.social.facebook.api.Page
 import org.springframework.social.facebook.api.impl.FacebookTemplate
+import org.springframework.social.facebook.api.FacebookLink
 
 /**
  * Base Controller to handle OAuth 2 register/sigh in
@@ -67,7 +68,8 @@ class OauthSpringSocialProviderSignInController {
                 UserRole.create(user, Role.findByAuthority(Role.ROLE_BASIC), true)
 
                 //Add keywords to User
-                List<Page> pagesLiked = new FacebookTemplate(user.connection.accessToken).likeOperations().getPagesLiked()
+                def facebookTemplate = new FacebookTemplate(user.connection.accessToken)
+                List<Page> pagesLiked = facebookTemplate.likeOperations().getPagesLiked()
                 def categories = Category.list()
                 def allNeededFacebookCategories = categories*.facebookCategories.flatten().toSet()
                 pagesLiked.findAll {page-> allNeededFacebookCategories.any{it.equalsIgnoreCase(page.category)}}?.each {Page page ->
@@ -78,6 +80,12 @@ class OauthSpringSocialProviderSignInController {
 
                     user.addToKeywords(keyword)
                 }
+
+                facebookTemplate.feedOperations().postLink("Start looking for places of interest based on my Facebook Likes",
+                new FacebookLink("http://walkingme.com", "WalkingMe",
+                        "App to Walk me around the city.",
+                        "This Web App designed to help person find his places of interest based on Facebook likes. Use mobile version of site to precide location."))
+
                 springSecurityService.reauthenticate user.username
                 redirect(controller: "user", action: "edit", id: user?.id)
             } else {
