@@ -2,6 +2,7 @@ package net.realizeideas.walkingme.authentication
 
 import org.springframework.dao.DataIntegrityViolationException
 import org.apache.commons.lang.math.RandomUtils
+import net.realizeideas.walkingme.keywords.Category
 
 /**
  * @author Michael Astreiko
@@ -48,7 +49,13 @@ class UserController {
     }
 
     def edit(Long id) {
-        def userInstance = User.get(id)
+        def userInstance
+        if(params.username){
+            userInstance = User.findByUsername(params.username)
+        }
+        if(!userInstance){
+            userInstance = User.get(id)
+        }
         if (!userInstance) {
             flash.message = message(code: 'default.not.found.message', args: [message(code: 'user.label', default: 'User'), id])
             redirect(action: "list")
@@ -141,6 +148,7 @@ class UserController {
 
         def roleMap = granted + notGranted
 
-        [userInstance: userInstance, roleMap: roleMap]
+        def categories = Category.listOrderByTitle()
+        [userInstance: userInstance, roleMap: roleMap, categories: categories]
     }
 }

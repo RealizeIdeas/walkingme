@@ -4,6 +4,7 @@ import net.realizeideas.walkingme.authentication.Role
 import net.realizeideas.walkingme.authentication.Requestmap
 import net.realizeideas.walkingme.common.translatable.Translatable
 import net.realizeideas.walkingme.keywords.Category
+import net.realizeideas.walkingme.keywords.Keyword
 
 class BootStrap {
 
@@ -29,6 +30,8 @@ class BootStrap {
         createCategory("Music", "en")
         createCategory("Shopping", "en")
 
+
+
     }
 
     void createRequestMap(String url, String configAtt) {
@@ -49,7 +52,6 @@ class BootStrap {
         translatable.save()
         return translatable
     }
-
 
 
 
