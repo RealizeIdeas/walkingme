@@ -58,6 +58,7 @@ class FoursquareSearchService implements PlacesSearchExecutor {
             foresquareResult.response.venues.each {venue ->
                try {
                     Place place = new Place()
+                    place.publicId = venue.id
                     place.service = "Foresquare"
                     place.title = venue.name
                     place.websiteURL = venue.url
