@@ -7,6 +7,7 @@ beans = {
         /*Places Search API*/
     util.list(id: 'placesSearchExecutors'){
        ref(bean:'googlePlacesSearchService')
+       ref(bean: 'foursquareSearchService')
    }
 
 }
