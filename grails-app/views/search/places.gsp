@@ -16,9 +16,12 @@
     <g:each in="${places}" var="place" status="i">
       <tr id="place${place.publicId?.replaceAll(":", "_")}">
         <td class="description">
-          <h5><g:link controller="place" action="show" id="${place?.publicId}">${place.title?.encodeAsHTML()}</g:link></h5>
+          <h5><g:link controller="place" action="show" params="[publicId:place?.publicId, service:place?.service]">
+            ${place.title?.encodeAsHTML()}
+          </g:link></h5>
 
-          <div class="address">${place.location?.additional?.encodeAsHTML()}</div>
+          <div class="distance">${place.distance?.encodeAsHTML()}</div>
+          <div class="address">${place.location?.toString()?.encodeAsHTML()}</div>
           <g:if test="${place.ranking}">
             <div>${place.ranking}</div>
           </g:if>
