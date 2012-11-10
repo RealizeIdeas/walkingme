@@ -34,38 +34,41 @@ class GooglePlacesSearchService implements PlacesSearchExecutor {
         //Used to calculate distance
         def userLatitude = new BigDecimal(query.location.split(',')[0])
         def userLongitude = new BigDecimal(query.location.split(',')[1])
-
-        def keyword = query.keywords?.join("|")
-        keyword = keyword.trim()
-
-
+        def keywords = query.keywords
+        List places = []
         StopWatch stopWatch = new StopWatch()
         stopWatch.start()
-        def http = new HTTPBuilder("https://maps.googleapis.com")
-        http.request(GET, ContentType.TEXT) {
-            uri.path = '/maps/api/place/nearbysearch/json'
-            uri.query = [location: query.location, sensor: false,
-                    keyword : keyword,
-                    rankby:"distance",
+        while (keywords.size() > 1 && places.size() < 5) {
+            def keyword = keywords?.join("|")
+            keyword = keyword.trim()
+
+            def http = new HTTPBuilder("https://maps.googleapis.com")
+            http.request(GET, ContentType.TEXT) {
+                uri.path = '/maps/api/place/nearbysearch/json'
+                uri.query = [location: query.location, sensor: false,
+                        keyword: keyword,
+                        rankby: "distance",
 //                    language: query.language,
-                    key:grailsApplication.config.google.places.apiKey]
+                        key: grailsApplication.config.google.places.apiKey]
 
-            headers.'Referer' = grailsApplication.config.grails.serverURL
+                headers.'Referer' = grailsApplication.config.grails.serverURL
 
-            response.success = { resp, reader ->
-                def searchResult = reader.text
-                googleResult = JSON.parse(searchResult)
+                response.success = { resp, reader ->
+                    def searchResult = reader.text
+                    googleResult = JSON.parse(searchResult)
+                }
             }
-        }
-        if (log.isInfoEnabled()) {
-            log.info("googleResult: ${googleResult?.toString()}")
-        }
+            if (log.isInfoEnabled()) {
+                log.info("googleResult: ${googleResult?.toString()}")
+            }
 
-        List places = retrievePlaces(googleResult, userLatitude, userLongitude,
+            places += retrievePlaces(googleResult, userLatitude, userLongitude,
                     "Cannot parse specific Google Place with query ${keyword} and location ${query.location}")
+            keywords.remove(keywords.iterator().next())
+        }
         stopWatch.stop()
         if (log.isInfoEnabled()) {
-            log.info("Google search with query ${keyword} and location ${query.location} took ${stopWatch.toString()} and found ${places.size()} places")
+            log.info("Google search with query ${keywords} and location ${query.location} took ${stopWatch.toString()} and found ${places.size()} places")
         }
         SearchResult searchResult = new SearchResult()
         searchResult.resultList = places
@@ -91,7 +94,7 @@ class GooglePlacesSearchService implements PlacesSearchExecutor {
                     Place place = new Place()
                     place.publicId = googlePlace.id
                     place.service = "Google"
-                    if(Place.findByPublicIdAndService(place.publicId, place.service)){
+                    if (Place.findByPublicIdAndService(place.publicId, place.service)) {
                         place = Place.findByPublicIdAndService(place.publicId, place.service)
                     }
                     place.title = googlePlace.name
