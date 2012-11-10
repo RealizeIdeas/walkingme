@@ -24,4 +24,11 @@ class Location {
         longitude(nullable: true)
     }
 
+    @Override
+    public String toString() {
+        if(additional){
+            return additional
+        }
+        return "${street?:''} ${postalCode?:''} ${city?:''}, ${countryCode}"
+    }
 }

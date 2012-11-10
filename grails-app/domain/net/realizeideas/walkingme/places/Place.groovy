@@ -7,7 +7,7 @@ import net.realizeideas.walkingme.common.Photo
  * @author Michael Astreiko
  */
 class Place {
-    static transients = ['service', 'distance']
+    static transients = ['distance']
     //Id from Service
     String publicId
     String title

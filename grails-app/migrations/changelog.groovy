@@ -535,4 +535,28 @@ databaseChangeLog = {
     changeSet(author: "ami (generated)", id: "1352492172160-33") {
         addForeignKeyConstraint(baseColumnNames: "translatable_id", baseTableName: "translatable_string", constraintName: "FK9E3B903F5C7C6CE8", deferrable: "false", initiallyDeferred: "false", referencedColumnNames: "id", referencedTableName: "translatable", referencesUniqueColumn: "false")
     }
+
+    changeSet(author: "ami (generated)", id: "1352553888585-1") {
+        addColumn(tableName: "place") {
+            column(name: "public_id", type: "varchar(255)") {
+                constraints(nullable: "false")
+            }
+        }
+    }
+
+    changeSet(author: "ami (generated)", id: "1352555399018-1") {
+        addColumn(tableName: "place") {
+            column(name: "service", type: "varchar(255)") {
+                constraints(nullable: "false")
+            }
+        }
+    }
+
+    changeSet(author: "ami (generated)", id: "1352555399018-2") {
+        createIndex(indexName: "unique-public_id", tableName: "place") {
+            column(name: "service")
+
+            column(name: "public_id")
+        }
+    }
 }
