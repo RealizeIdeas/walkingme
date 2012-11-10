@@ -26,7 +26,7 @@ class FoursquareSearchService implements PlacesSearchExecutor {
         def http = new HTTPBuilder("https://api.foursquare.com")
         http.request( GET, ContentType.TEXT ) {
             uri.path = '/v2/venues/search'
-            uri.query = [ll: query.location, intent: 'browse', radius: '100000', query: query.keywords.join(" "), v: df.format(now),
+            uri.query = [ll: query.location, intent: 'browse', radius: '50000', query: query.keywords.join(" "), v: df.format(now),
                          client_id: grailsApplication.config.foursquare.clientId, client_secret: grailsApplication.config.foursquare.clientSecret]
 
             response.success = { resp, reader ->
@@ -59,7 +59,7 @@ class FoursquareSearchService implements PlacesSearchExecutor {
                try {
                     Place place = new Place()
                     place.publicId = venue.id
-                    place.service = "Foresquare"
+                    place.service = "Foursquare"
                     place.title = venue.name
                     place.websiteURL = venue.url
 
@@ -85,6 +85,7 @@ class FoursquareSearchService implements PlacesSearchExecutor {
         location.city = foresquareLocation.city
         location.province = foresquareLocation.state
         location.street = foresquareLocation.address
+        location.postalCode = foresquareLocation.postalCode
         location.countryCode = foresquareLocation.cc
 
         return location
