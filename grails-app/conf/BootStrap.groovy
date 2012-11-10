@@ -38,17 +38,14 @@ class BootStrap {
     }
 
     void createCategory(String title, String language) {
-        if (!Category.retrieveByTitle(title, language)) {
-            new Category(title: createTranslations([language:title])).save(failOnError: true, flush: true)
+        if (!Category.retrieveByTitle(title, language).list()) {
+            new Category(title: createTranslations(language, title)).save(failOnError: true, flush: true)
         }
     }
 
-    private Translatable createTranslations(Map keyValueTranslations) {
-
+    private Translatable createTranslations(String lang, String value) {
         Translatable translatable = new Translatable()
-        keyValueTranslations?.each {key, value ->
-            translatable.addValue(key, value)
-        }
+        translatable.addValue(lang, value)
         translatable.save()
         return translatable
     }

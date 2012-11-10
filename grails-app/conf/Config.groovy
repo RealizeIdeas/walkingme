@@ -68,12 +68,16 @@ environments {
         grails.plugins.springsocial.facebook.clientId = "101900146642118"
         grails.plugins.springsocial.facebook.clientSecret = "31a92a00e7144bb3b4d45e8253f4d5a0"
         grails.serverURL = "http://localhost:8080/walkingme"
+        fousquare.clientId = "ZHX144RHEIHRBYKQUF4HTAJCOWNTNH5FMVQKTZ23RCWK4IQ2"
+        fousquare.clientSecret = "LO1P1YLGAUX5L0AC5J5BC2TWYY2JNLVZI5APHEGBKJYMQF00"
     }
     test {
         grails.plugins.springsocial.facebook.clientId = "476389125745449"
         grails.plugins.springsocial.facebook.clientSecret = "e6477ad7ddd32b61537b407390c230e0"
         basePath = System.properties['catalina.base'] + "/webapps/ROOT"
         grails.serverURL = "http://walkingme.realizeideas.net"
+        fousquare.clientId = "ZHX144RHEIHRBYKQUF4HTAJCOWNTNH5FMVQKTZ23RCWK4IQ2"
+        fousquare.clientSecret = "LO1P1YLGAUX5L0AC5J5BC2TWYY2JNLVZI5APHEGBKJYMQF00"
     }
     production {
         grails.logging.jul.usebridge = false
@@ -81,6 +85,8 @@ environments {
         grails.plugins.springsocial.facebook.clientId = "466216803419591"
         grails.plugins.springsocial.facebook.clientSecret = "6d8369422272df8185d04b9300554668"
         basePath = System.properties['catalina.base'] + "/webapps/ROOT"
+        fousquare.clientId = "ZHX144RHEIHRBYKQUF4HTAJCOWNTNH5FMVQKTZ23RCWK4IQ2"
+        fousquare.clientSecret = "LO1P1YLGAUX5L0AC5J5BC2TWYY2JNLVZI5APHEGBKJYMQF00"
     }
 
 }

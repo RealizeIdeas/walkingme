@@ -15,7 +15,7 @@ class Category {
             "title"{
                 translations {
                     eq("languageId", langId)
-                    ilike("%${titleToSearch}%")
+                    ilike("value", "%${titleToSearch}%".toString())
                 }
             }
             cache false
