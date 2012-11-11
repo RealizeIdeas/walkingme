@@ -94,3 +94,11 @@ a.facebook_button {
     margin-top: -30px;
     text-align: right;
 }
+
+#addPopup input[type=text]{
+    width: 400px;
+}
+
+#addPopup label {
+    width: 400px;
+}

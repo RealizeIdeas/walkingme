@@ -3,9 +3,10 @@ package net.realizeideas.walkingme.keywords
 import org.springframework.dao.DataIntegrityViolationException
 import net.realizeideas.walkingme.keywords.Category
 import net.realizeideas.walkingme.keywords.Keyword
+import net.realizeideas.walkingme.authentication.User
 
 class CategoryController {
-
+    def springSecurityService
     static allowedMethods = [save: "POST", update: "POST", delete: "POST"]
 
     def index() {
@@ -34,7 +35,8 @@ class CategoryController {
 
     def show(Long id) {
         def categoryInstance = Category.get(id)
-        def keywords = Keyword.findByCategory(categoryInstance)
+        def user = User.read(springSecurityService.currentUser.id)
+        def keywords = Keyword.findAllByCategoryAndUser(categoryInstance, user)
 
         if (!categoryInstance) {
             flash.message = message(code: 'default.not.found.message', args: [message(code: 'category.label', default: 'Category'), id])
@@ -89,6 +91,38 @@ class CategoryController {
 
         flash.message = message(code: 'default.updated.message', args: [message(code: 'category.label', default: 'Category'), categoryInstance.id])
         redirect(action: "show", id: categoryInstance.id)
+    }
+
+    def deleteKeyword(Long id){
+        def keyword = Keyword.get(id)
+        def category = keyword.category
+
+        try {
+            category.removeFromKeywords(keyword)
+            keyword.delete(flush: true)
+            flash.message = message(code: 'default.deleted.message', args: [message(code: 'category.label', default: 'Keyword'), id])
+        }
+        catch (DataIntegrityViolationException e) {
+            flash.message = message(code: 'default.not.deleted.message', args: [message(code: 'category.label', default: 'Category'), id])
+        }
+        redirect(action: "show", id: category.id)
+    }
+
+    def addKeyword(String title, Long categoryId) {
+        def category = Category.get(categoryId)
+        def user = User.get(springSecurityService.currentUser?.id)
+
+        Keyword keyword = new Keyword(user: user, category: category)
+        keyword.title = title
+
+        if (!keyword.save(flush: true)) {
+            flash.error = "Cannot save keyword. Try again later."
+        } else {
+            flash.message = "Keyword '${title}' saved."
+        }
+
+
+        redirect(action: "show", id: categoryId)
     }
 
     def delete(Long id) {

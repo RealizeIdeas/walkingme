@@ -6,7 +6,7 @@
 <html>
 <head>
     <meta name='layout' content='mobile'/>
-    <title><g:message code="default.edit.label" args="[entityName]"/></title>
+    <title>WalkingMe</title>
 </head>
 
 <body>
@@ -26,23 +26,22 @@
 
 <div data-role="popup" id="addPopup" data-position-to="window">
     <div data-role="content">
-        <g:form  url='[controller: "keyword", action: "create"]'
-                 id="newKeyWordPopup"
-                 name="newKeyWordPopup"
+        <g:form  url='[controller: "category", action: "addKeyword"]'
+                 id="newKeywordPopup"
+                 name="newKeywordPopup"
                  method="post">
             <div data-role="fieldcontain">
                 <fieldset data-role="controlgroup">
-                    <label for="newKewWord">
+                    <label for="title">
                         New keyword
                     </label>
-                    <input name="" id="newKewWord" placeholder="" value="" type="text"
-                           style="width: 400px;">
-
-                    </input>
+                  <g:textField name="title"/>
+                  <g:hiddenField name="categoryId" value="${category?.id}"/>
                 </fieldset>
             </div>
-            <g:link controller="keyword" action="create" id="0"
-                    data-transition="slide" data-role="button" data-icon="plus" data-iconpos="right">Add this</g:link>
+          <g:submitButton name="addKeyword" value="Add Keyword" data-transition="slide"
+                          data-role="button" data-icon="plus" data-iconpos="right"/>
+
         </g:form>
     </div>
 </div>
@@ -50,13 +49,12 @@
 <div data-role="content">
     <ul id="categoryList" data-role="listview" data-divider-theme="b" data-inset="true">
         <li data-role="list-divider" role="heading">
-            ${category.title?.getValue("en")}
+            <g:translate value="${category.title}"/>
         </li>
 
-        <g:each in="${keywords}"
-                status="i" var="keyword">
+        <g:each in="${keywords}" status="i" var="keyword">
             <li data-transition="slide" data-icon="delete" data-role="button" data-iconpos="left">
-                <g:link controller="keyword" action="delete" id="${keyword.id}">${keyword.title?.getValue("en")}</g:link>
+                <g:link controller="category" action="deleteKeyword" id="${keyword.id}">${keyword.title}</g:link>
             </li>
         </g:each>
     </ul>
