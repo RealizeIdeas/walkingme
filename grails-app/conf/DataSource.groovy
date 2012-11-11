@@ -50,7 +50,7 @@ environments {
         dataSource {
             url = "jdbc:mysql://127.0.0.1:3306/walkingme_prod?useUnicode=yes&characterEncoding=UTF-8"
             username = "bbdashboard"
-            password = "bbdashboard"
+            password = "bbdashboard23"
             pooled = true
             properties {
                 maxActive = -1
