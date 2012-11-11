@@ -65,7 +65,11 @@ class GooglePlacesSearchService implements PlacesSearchExecutor {
 
             places += retrievePlaces(googleResult, userLatitude, userLongitude,
                     "Cannot parse specific Google Place with query ${keyword} and location ${query.location}")
-            keyword = keywordsIterator.next()
+            if(keywordsIterator.hasNext()) {
+                keyword = keywordsIterator.next()
+            } else {
+                keyword = null
+            }
         }
         stopWatch.stop()
         if (log.isInfoEnabled()) {
