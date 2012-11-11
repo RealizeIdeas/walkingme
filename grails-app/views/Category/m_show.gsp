@@ -20,7 +20,7 @@
         WalkingMe
     </h3>
 
-    <g:link controller="user" action="edit" params="[username:sec.username()]" data-role="backBtn"
+    <g:link controller="user" action="edit" params="[username:sec.username()]" data-role="button"
            data-icon="arrow-l" data-iconpos="left" class="ui-btn-left" data-transition="slide">Back</g:link>
 </div>
 
@@ -47,15 +47,17 @@
 </div>
 
 <div data-role="content">
+    <label for="categoryList">
+        *Delete keyword click the button
+    </label>
     <ul id="categoryList" data-role="listview" data-divider-theme="b" data-inset="true">
         <li data-role="list-divider" role="heading">
             <g:translate value="${category.title}"/>
         </li>
 
         <g:each in="${keywords}" status="i" var="keyword">
-            <li data-transition="slide" data-icon="delete" data-role="button" data-iconpos="left">
-                <g:link controller="category" action="deleteKeyword" id="${keyword.id}">${keyword.title}</g:link>
-            </li>
+                <g:link controller="category" action="deleteKeyword" id="${keyword.id}"
+                        data-icon="delete" data-role="button"   data-iconpos="left">${keyword.title}</g:link>
         </g:each>
     </ul>
 </div>
