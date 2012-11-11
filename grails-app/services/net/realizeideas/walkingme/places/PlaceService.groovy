@@ -7,6 +7,7 @@ import groovyx.net.http.ContentType
 import grails.converters.JSON
 import net.realizeideas.walkingme.common.Location
 import net.realizeideas.walkingme.common.Photo
+import java.text.SimpleDateFormat
 
 class PlaceService {
     def grailsApplication
@@ -33,10 +34,12 @@ class PlaceService {
 
     Place getFourSquarePlaceDetails(venueId) {
         def venueJson
+        def now = new Date();
+        def df = new SimpleDateFormat("yyyyMMdd");
         def http = new HTTPBuilder("https://api.foursquare.com")
         http.request(GET, ContentType.TEXT) {
             uri.path = "/v2/venues/${venueId}"
-            uri.query = [client_id: grailsApplication.config.foursquare.clientId,v:'20121111',
+            uri.query = [client_id: grailsApplication.config.foursquare.clientId,v: df.format(now),
                     client_secret: grailsApplication.config.foursquare.clientSecret]
 
             response.success = { resp, reader ->
