@@ -56,18 +56,18 @@
 
         <g:each in="${places}" status="i" var="place">
         <li data-theme="c">
-            <a href="#" data-transition="slide">
+            <g:link controller="place" action="show" params="[publicId: place?.reference, service: place?.service]"  data-transition="slide">
                 <h4 style="font-weight: bold;">
-                ${place.title}
+                    ${place.title}
                 </h4>
                 <label style="color: #008b8b; font-style: italic; font-weight: normal;">
                     ${place.distance} m
                 </label>
                 <br/>
                 <label style="font-weight: normal;">
-                ${place.location}
+                     ${place.location}
                 </label>
-            </a>
+            </g:link>
         </li>
         </g:each>
     </ul>
@@ -79,7 +79,7 @@
 
     <g:each in="${categories}"
             status="i" var="category">
-        <input type="checkbox" id="${category.title?.getValue("en")}" class="custom" data-mini="true" checked="checked"/>
+        <input type="checkbox" id="${category.title?.getValue("en")}" date-theme="a" data-mini="true" checked="checked"/>
         <label for="${category.title?.getValue("en")}" data-mini="true">${category.title?.getValue("en")}</label>
     </g:each>
     </div>
