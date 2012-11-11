@@ -10,14 +10,13 @@
 <html>
 <head>
     <meta name='layout' content='mobile'/>
-    <title>WalkingMe</title>
+    <title><g:message code="default.edit.label" args="[entityName]"/></title>
 </head>
 
 <body>
 <div data-theme="a" data-role="header">
-    <a id="okBtn" data-role="button" href="" class="ui-btn-right">
-        OK
-    </a>
+    <g:link controller="search" action="placesSearch" params="[username:sec.username()]" data-role="button"
+            class="ui-btn-left" data-transition="slide">OK</g:link>
     <h3 id="settings">
         Settings
     </h3>

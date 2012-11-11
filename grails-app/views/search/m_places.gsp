@@ -60,14 +60,15 @@
                 <h4 style="font-weight: bold;">
                     ${place.title}
                 </h4>
-                <label style="color: #008b8b; font-style: italic; font-weight: normal;">
-                    ${place.distance} m
-                </label>
-                <br/>
                 <label style="font-weight: normal;">
                      ${place.location}
                 </label>
             </g:link>
+            <span class="ui-li-count">
+                <label style="color: #008b8b; font-style: italic; font-weight: normal;">
+                    ${place.distance} m
+                </label>
+            </span>
         </li>
         </g:each>
     </ul>
