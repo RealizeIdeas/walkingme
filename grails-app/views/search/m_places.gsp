@@ -80,8 +80,8 @@
 
     <g:each in="${categories}"
             status="i" var="category">
-        <input type="checkbox" id="${category.title?.getValue("en")}" date-theme="a" data-mini="true" checked="checked"/>
-        <label for="${category.title?.getValue("en")}" data-mini="true">${category.title?.getValue("en")}</label>
+        <input type="checkbox" id="${category.id}" date-theme="a" data-mini="true" ${params.filterByCategory ? (params.selectedCategories?.split(",").contains("${category.id}") ? "checked=\"checked\"" : "") : "checked=\"checked\""}/>
+        <label for="${category.id}" data-mini="true">${category.title?.getValue("en")}</label>
     </g:each>
     </div>
 
@@ -102,6 +102,15 @@
             $( "#popupPanel button" ).on( "click", function() {
                 $( "#popupPanel" ).popup('close');
             });
+
+            $( "#popupPanel :checkbox").on("click", function() {
+                var categories = "";
+                jQuery("#popupPanel input:checked").each(function() {
+                    categories += jQuery(this).attr('id') + ",";
+                });
+                categories = categories.substring(0, categories.length - 1);
+                window.location.href = "${createLink(controller: 'search', action: 'placesSearch')}?filterByCategory=true&selectedCategories=" + categories;
+            })
 
         });
     </script>

@@ -5,13 +5,12 @@
   <title>Places</title>
   <script src="http://maps.googleapis.com/maps/api/js?key=${grailsApplication.config.google.places.apiKey}&sensor=false"
           type="text/javascript"></script>
-  <r:require modules="jquery-ui, jqModal"/>
-  <g:javascript src="tooltip.js"/>
+  <r:require modules="jquery-ui"/>
   <r:script>
       var map;
       var overlay = new google.maps.OverlayView();
       var bounds = new google.maps.LatLngBounds();
-      var iconPath = '${resource(dir: 'images', file: 'map_marker.png')}';
+      var iconPath = '${resource(dir: 'images', file: 'map_marker4.png')}';
       var cookieLocation = jQuery.cookie("location");
       var latitude = cookieLocation ? parseFloat(cookieLocation.split(',')[0]) : 51.5073346;
       var longitude = cookieLocation ? parseFloat(cookieLocation.split(',')[1]) : 27.5611;
@@ -44,10 +43,6 @@
         location.reload(true);
       }
     });
-      jQuery("#refineLocationLink").click(function(){
-        <g:remoteFunction controller="user" action="loadUserMap" update="refineLocation"/>
-        jQuery("#refineLocation").jqmShow();
-    });
 
   function placeMarker(location, elemId){
     var containerPixel = overlay.getProjection().fromLatLngToContainerPixel(location);
@@ -65,13 +60,6 @@
 
 </div>
 
-<div id="refineLocationLinkHolder">
-  <a href="javascript:void(0)" id="refineLocationLink">Refine My Location</a>
-</div>
-
-<div id="refineLocation" style="display: none" class="jqmWindow"></div>
-
-<h1>Places</h1>
 <g:if test="${flash.message}">
   <div class="message" role="status">${flash.message}</div>
 </g:if>
@@ -84,10 +72,10 @@
         <div id="place${place.publicId}" class="place">
           <div class="description">
             <h5><g:link controller="place" action="show" params="[publicId: place?.reference, service: place?.service]">
-              ${place.title?.encodeAsHTML()} ${place.service}
+              ${place.title?.encodeAsHTML()}
             </g:link></h5>
 
-            <div class="distance">${place.distance?.encodeAsHTML()}</div>
+            <div class="distance">${place.distance?.encodeAsHTML()} meters</div>
 
             <div class="address">${place.location?.toString()?.encodeAsHTML()}</div>
             <g:if test="${place.ranking}">
@@ -120,7 +108,7 @@
               window.location = "${createLink(controller: 'place', action: 'show', params: [publicId: place?.reference, service: place?.service])}";
           });
 
-        //Draw tooltips
+        %{--//Draw tooltips
         var content${place.publicId} = "<strong>${place.title?.encodeAsHTML()}</strong>" +
             "<br/>${place.location?.toString()?.encodeAsHTML()}";
         var tooltipOptions = {
@@ -128,12 +116,11 @@
           content:content${place.publicId}, // required
           cssClass:'mapTooltip' // name of a css class to apply to tooltip
         };
-        var tooltip${place.publicId} = new Tooltip(tooltipOptions);
+        var tooltip${place.publicId} = new Tooltip(tooltipOptions);--}%
 
     </g:each>
       //Resise/rezoom map after all markers pointed
         map.fitBounds(bounds);
-        map.setZoom(5);
       });
     </r:script>
 

@@ -17,19 +17,23 @@
   <link rel="stylesheet" href="${resource(dir: 'css', file: 'mobile.css')}" type="text/css">
 
   <g:layoutHead/>
-  <r:require modules="jquery"/>
+  <r:require modules="jquery,jqModal"/>
+  <g:javascript src="tooltip.js"/>
   <r:layoutResources/>
-   <g:javascript src="jquery/plugins/jquery.cookie.js"/>
+  <g:javascript src="jquery/plugins/jquery.cookie.js"/>
 </head>
 
 <body>
-<div id="grailsLogo" role="banner"><a href="http://grails.org"><img
-    src="${resource(dir: 'images', file: 'grails_logo.png')}" alt="Grails"/></a></div>
 <g:render template="/layouts/header"/>
-<g:layoutBody/>
-<div class="footer" role="contentinfo"></div>
 
-<div id="spinner" class="spinner" style="display:none;"><g:message code="spinner.alt" default="Loading&hellip;"/></div>
+<g:layoutBody/>
+<div class="footer" role="contentinfo">
+  2012 REID Consulting
+  <div class="comments">For questions and comments, please send us email to <a
+      href="mailto:info@realizeideas.net">info@realizeideas.net</a>
+  </div>
+</div>
+
 <g:javascript library="application"/>
 <r:layoutResources/>
 </body>
