@@ -15,6 +15,7 @@
     <g:layoutHead/>
     <r:layoutResources/>
     <g:layoutHead/>
+   <g:javascript src="jquery/plugins/jquery.cookie.js"/>
 </head>
 
 <body>
