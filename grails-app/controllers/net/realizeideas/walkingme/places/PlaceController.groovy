@@ -6,6 +6,12 @@ class PlaceController {
 
     def show() {
         Place place
+
+        String view = 'show'
+        withMobileDevice {
+            view = 'm_show'
+        }
+
         if (params.service.equals("Foursquare")) {
             place = placeService.getFourSquarePlaceDetails(params.publicId)
         } else if (params.service.equals("Google")) {
@@ -13,6 +19,6 @@ class PlaceController {
         }
 
 
-        render(view: "show", model: [placeInstance:place])
+        render(view: view, model: [placeInstance:place])
     }
 }

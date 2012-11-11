@@ -5,6 +5,7 @@ import java.util.concurrent.TimeUnit
 import java.util.concurrent.Executors
 import net.realizeideas.walkingme.authentication.User
 import org.springframework.context.i18n.LocaleContextHolder
+import net.realizeideas.walkingme.keywords.Category
 
 /**
  * @author Michael Astreiko
@@ -19,6 +20,12 @@ class SearchController {
      * Main paras are 'mode', 'categoryCode' and 'search'.
      */
     def placesSearch = {
+
+        String view = 'places'
+        withMobileDevice {
+            view = 'm_places'
+        }
+
         StopWatch stopWatch = new StopWatch()
         stopWatch.start()
         User user = User.read(springSecurityService.currentUser?.id)
@@ -50,6 +57,10 @@ class SearchController {
         if (log.isInfoEnabled()) {
             log.info "Time executing search for keyword ${query.keywords?.join(";")} is ${stopWatch.toString()}"
         }
-        render view: "places", model: [places:places]
+        def categories = Category.listOrderByTitle()
+        render view: view, model: [
+                places: places,
+                categories: categories
+        ]
     }
 }
