@@ -1,8 +1,5 @@
 
 <div class="fieldcontain ${hasErrors(bean: userInstance, field: 'keywords', 'error')} ">
-  <label for="lastName">
-    <g:message code="user.keywords.label" default="Keywords"/>
-  </label>
   <div>
     <g:each var="category" in="${categories}">
       <div id="category_${category.id}" class="category_keywords fieldcontain">

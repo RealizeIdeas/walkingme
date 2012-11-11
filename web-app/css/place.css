@@ -1,0 +1,44 @@
+.place_info {
+    width: 65%;
+    float:left;
+    padding: 15px;
+}
+
+.title {
+    color: #777;
+    font-size: 18px;
+    font-weight: bold;
+    padding: 15px 0;
+}
+
+.address {
+    font-size: 14px;
+    padding: 10px 0;
+}
+
+.contact_info {
+    width: 90%;
+    border: 1px solid #cccccc;
+    background-color: #eeeeee;
+    -webkit-border-radius: 5px;
+    -moz-border-radius: 5px;
+    -khtml-border-radius: 5px;
+    border-radius: 5px;
+    padding: 10px;
+}
+
+.photo_gallery {
+    margin-top: 50px;
+    width: 100%;
+}
+
+.photo_gallery a, .photo_gallery a:hover{
+    text-decoration: none;
+}
+
+.location_info {
+    width: 30%;
+    float:left;
+    margin-top: 20px;
+    margin-bottom: 40px;
+}

@@ -21,6 +21,11 @@ class SearchController {
      */
     def placesSearch = {
 
+        if(!springSecurityService.isLoggedIn()){
+            redirect(controller: "login", action: "join")
+            return
+        }
+
         String view = 'places'
         withMobileDevice {
             view = 'm_places'

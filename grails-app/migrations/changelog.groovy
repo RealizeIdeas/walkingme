@@ -583,4 +583,20 @@ databaseChangeLog = {
             column(name: "reference", type: "varchar(255)")
         }
     }
+
+    changeSet(author: "ami (generated)", id: "1352642746959-1") {
+        addColumn(tableName: "photo") {
+            column(name: "prefix", type: "varchar(255)")
+        }
+    }
+
+    changeSet(author: "ami (generated)", id: "1352642746959-2") {
+        addColumn(tableName: "photo") {
+            column(name: "suffix", type: "varchar(255)")
+        }
+    }
+
+    changeSet(author: "ami (generated)", id: "1352642746959-3") {
+        dropNotNullConstraint(columnDataType: "varchar(255)", columnName: "absoluteurl", tableName: "photo")
+    }
 }

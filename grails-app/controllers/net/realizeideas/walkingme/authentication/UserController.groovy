@@ -107,8 +107,8 @@ class UserController {
         addRoles(userInstance)
         addKeywords(userInstance)
 
-        flash.message = message(code: 'default.updated.message', args: [message(code: 'user.label', default: 'User'), userInstance.id])
-        redirect(action: "show", id: userInstance.id)
+        flash.message = "Your Likes were updated"
+        redirect(uri: "/")
     }
 
 
