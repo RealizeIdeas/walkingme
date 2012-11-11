@@ -37,6 +37,12 @@ class SearchController {
 
         Query query = new Query()
         query.keywords = user.keywords?.collect{it.title}
+        withMobileDevice {
+            if (params.filterByCategory) {
+                def selectedCategories = params.selectedCategories?.split(",")
+                query.keywords = user.keywords?.findAll{selectedCategories?.contains("${it.category.id}")}?.collect{it.title}
+            }
+        }
         query.location = request.cookies.find {it.name == "location"}?.value?.decodeURL()
         query.language = LocaleContextHolder.locale.language
 
