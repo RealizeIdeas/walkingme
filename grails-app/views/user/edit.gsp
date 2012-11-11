@@ -4,6 +4,12 @@
   <meta name="layout" content="main">
   <g:set var="entityName" value="${message(code: 'user.label', default: 'User')}"/>
   <title><g:message code="default.edit.label" args="[entityName]"/></title>
+  <r:require modules="jquery-ui, tagedit"/>
+  <r:script>
+    <g:each var="category" in="${categories}">
+      jQuery("#category_${category.id} input.tag").tagedit({animSpeed:100, breakKeyCodes:[ 9, 13 ], allowEdit:false});
+    </g:each>
+  </r:script>
 </head>
 
 <body tab="usersTab">

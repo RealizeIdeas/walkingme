@@ -38,10 +38,11 @@ class GooglePlacesSearchService implements PlacesSearchExecutor {
         List places = []
         StopWatch stopWatch = new StopWatch()
         stopWatch.start()
-        while (keywords.size() > 0 && places.size() < 5) {
-            def keyword = keywords?.join("|")
+        def keyword = keywords?.join("|")
+        def keywordsIterator = keywords.iterator()
+        //Google search not always return result for all keywords in one query -> then do separate search for each keyword until get 20 results
+        while (keyword && places.size() < 20) {
             keyword = keyword.trim()
-
             def http = new HTTPBuilder("https://maps.googleapis.com")
             http.request(GET, ContentType.TEXT) {
                 uri.path = '/maps/api/place/nearbysearch/json'
@@ -64,11 +65,11 @@ class GooglePlacesSearchService implements PlacesSearchExecutor {
 
             places += retrievePlaces(googleResult, userLatitude, userLongitude,
                     "Cannot parse specific Google Place with query ${keyword} and location ${query.location}")
-            keywords.remove(keywords.iterator().next())
+            keyword = keywordsIterator.next()
         }
         stopWatch.stop()
         if (log.isInfoEnabled()) {
-            log.info("Google search with query ${keywords} and location ${query.location} took ${stopWatch.toString()} and found ${places.size()} places")
+            log.info("Google search with query ${query.keywords} and location ${query.location} took ${stopWatch.toString()} and found ${places.size()} places")
         }
         SearchResult searchResult = new SearchResult()
         searchResult.resultList = places

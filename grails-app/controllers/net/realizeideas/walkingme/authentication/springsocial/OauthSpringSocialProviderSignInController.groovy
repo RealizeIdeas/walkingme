@@ -87,8 +87,8 @@ class OauthSpringSocialProviderSignInController {
 
                 facebookTemplate.feedOperations().postLink("Start looking for places of interest based on my Facebook Likes",
                 new FacebookLink("http://walkingme.com", "WalkingMe",
-                        "App to Walk me around the city.",
-                        "This Web App designed to help person find his places of interest based on Facebook likes. Use mobile version of site to precide location."))
+                        "App to Walk You around the city.",
+                        "This Web App designed to walk you in the city based on your Facebook likes. Also available via mobile devices"))
 
                 springSecurityService.reauthenticate user.username
                 redirect(controller: "user", action: "edit", id: user?.id)

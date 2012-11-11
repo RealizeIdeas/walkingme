@@ -16,4 +16,10 @@ modules = {
         resource url: 'css/jqModal.css', disposition: 'head'
     }
 
+    tagedit {
+        resource url: [dir: 'js/jquery/plugins', file: 'jquery.tagedit.js'], disposition: 'head'
+        resource url: [dir: 'js/jquery/plugins', file: 'jquery.autoGrowInput.js'], disposition: 'head'
+        resource url: [dir: 'css/jquery/plugins', file: 'jquery.tagedit.css'], disposition: 'head'
+    }
+
 }

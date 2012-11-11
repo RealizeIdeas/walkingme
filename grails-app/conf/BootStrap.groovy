@@ -31,12 +31,12 @@ class BootStrap {
         createCategory("Sports", "en", ["Athlete", "Outdoor Gear/Sporting Goods", "Sports League", "Sports Venue",
                 "Sports/Recreation/Activities", "Amateur Sports Team", "School Sports Team"])
         createCategory("Intertainment", "en", ["Club", "Hotel", "Movie", "Movie Theater", "Movies/Music",
-                "Museum/Art Gallery", "Book", "Book Store"])
+                "Museum/Art Gallery", "Book", "Book Store", "Company", "Small Business", "Local Business", "Organization"])
         createCategory("Music", "en", ["Musician/Band", "Musical Instrument", "Playlist", "Radio Station",
                 "Song", "Concert Tour", "Concert Venue", "Music Award", "Music Chart", "Music Video"])
-        createCategory("Shopping", "en", ["Magazine", "Company", "Clothing", "Spas/Beauty/Personal Care",
-                "Jewelry/Watches", "Local Business", "Organization", "Shopping/Retail", "Small Business",
-                "Product/Service", "Business ServicesConsulting/Business Services"])
+        createCategory("Shopping", "en", ["Magazine",  "Clothing", "Spas/Beauty/Personal Care",
+                "Jewelry/Watches",  "Shopping/Retail", "Product/Service",
+                "Business ServicesConsulting/Business Services"])
     }
 
     void createRequestMap(String url, String configAtt) {
