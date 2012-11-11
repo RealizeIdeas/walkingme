@@ -35,7 +35,7 @@
     </g:each>
 </ul>
 
-<div data-role="content">
+%{--<div data-role="content">
     <div data-role="fieldcontain">
         <fieldset data-role="controlgroup">
             <label for="publishToggle">
@@ -51,6 +51,6 @@
             </select>
         </fieldset>
     </div>
-</div>
+</div>--}%
 </body>
 </html>

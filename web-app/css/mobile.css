@@ -80,3 +80,19 @@
 		margin-left: 0;
 	}
 }
+
+a#joinWithFacebook {
+    color: white;
+}
+.login_container {
+    text-align: center;
+}
+.login_container .facebook_button_holder {
+    text-align: center;
+}
+.login_container .description {
+    color: #777;
+    font-size: 17px;
+    line-height: 150%;
+    margin: 15px 0;
+}

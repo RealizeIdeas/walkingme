@@ -33,15 +33,16 @@
 
 <div data-theme="a" data-role="header">
 
-    %{--<g:link controller="user" action="edit" params="[username: sec.username()]" data-role="button"--}%
-            %{--data-icon="gear" data-iconpos="left" class="ui-btn-left" data-transition="slide">Gear</g:link>--}%
 
-    <a href="#popupPanel" data-rel="popup" data-transition="slide" data-position-to="window" data-role="button">Gear</a>
 
-    <a data-role="button" data-transition="slide" href="#page1" data-icon="grid"
+    <a href="#popupPanel" data-rel="popup" data-transition="slide" data-position-to="window" data-role="button">Filter</a>
+
+    %{--<a data-role="button" data-transition="slide" href="#page1" data-icon="grid"
        data-iconpos="left" class="ui-btn-right">
         Map
-    </a>
+    </a>--}%
+  <g:link controller="user" action="edit" params="[username: sec.username()]" data-role="button"
+            data-icon="gear" data-iconpos="left" class="ui-btn-right" data-transition="slide">Settings</g:link>
 
     <h3>
         WalkingMe
