@@ -18,6 +18,7 @@
 </head>
 
 <body>
+<g:render template="/layouts/geolocation"/>
 <div data-role="page" id="page1">
     <div data-role="content">
         <g:layoutBody/>
