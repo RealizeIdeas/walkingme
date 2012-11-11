@@ -12,7 +12,7 @@
 <body>
 
 <div data-theme="a" data-role="header">
-    <a id="addBtn" data-role="button" href="#addPopup" data-rel="popup" class="ui-btn-right" data-transition="slide">
+    <a id="addBtn" data-role="button" href="#addPopup" data-rel="popup" class="ui-btn-right" data-transition="pop">
         Add
     </a>
 
@@ -21,7 +21,7 @@
     </h3>
 
     <g:link controller="user" action="edit" params="[username:sec.username()]" data-role="backBtn"
-           data-icon="arrow-l" data-iconpos="left" class="ui-btn-left" data-transition="pop">Back</g:link>
+           data-icon="arrow-l" data-iconpos="left" class="ui-btn-left" data-transition="slide">Back</g:link>
 </div>
 
 <div data-role="popup" id="addPopup" data-position-to="window">
@@ -35,13 +35,14 @@
                     <label for="newKewWord">
                         New keyword
                     </label>
-                    <textarea name="" id="newKewWord" placeholder="" value="" type="text"
+                    <input name="" id="newKewWord" placeholder="" value="" type="text"
                            style="width: 400px;">
 
-                    </textarea>
+                    </input>
                 </fieldset>
             </div>
-            <input type="submit" value="Add this">
+            <g:link controller="keyword" action="create" id="0"
+                    data-transition="slide" data-role="button" data-icon="plus" data-iconpos="right">Add this</g:link>
         </g:form>
     </div>
 </div>
