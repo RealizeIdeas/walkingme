@@ -71,7 +71,6 @@ class PlaceService {
 
     private Location retrieveGoogleLocation(venueJson) {
         def addresses = venueJson.address_components
-        addresses.each{println it}
         Location location = new Location()
         location.latitude = new BigDecimal(venueJson.geometry.location.lat)
         location.longitude = new BigDecimal(venueJson.geometry.location.lng)
@@ -119,6 +118,8 @@ class PlaceService {
         photos?.groups?.find{it.type == "venue"}?.items?.each { item ->
             Photo photo = new Photo()
             photo.absoluteURL = "${item.prefix}/300x300/${item.suffix}"
+            photo.prefix = item.prefix
+            photo.suffix = item.suffix
             result << photo
         }
         return result

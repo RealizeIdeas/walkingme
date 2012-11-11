@@ -69,10 +69,11 @@ a:hover, a:active {
 }
 
 h1 {
-    color: #48802c;
+    color: #333;
     font-weight: normal;
     font-size: 1.25em;
     margin: 0.8em 0 0.3em 0;
+    padding: 10px
 }
 
 ul {
@@ -96,7 +97,6 @@ img {
 .content h1 {
     border-bottom: 1px solid #CCCCCC;
     margin: 0.8em 1em 0.3em;
-    padding: 0 0.25em;
 }
 
 .scaffold-list h1 {
@@ -220,6 +220,8 @@ fieldset,
     color: #666666;
     text-align: right;
     width: 25%;
+    vertical-align: top;
+    padding-top: 7px;
 }
 
 .fieldcontain .property-label {
@@ -687,7 +689,7 @@ a.skip {
     font-weight: bold;
     text-decoration: none;
     position: relative;
-    top: -7px;
+    top: -17px;
 }
 
 .top-bar .wrapper .logo {

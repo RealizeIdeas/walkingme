@@ -21,5 +21,9 @@ modules = {
         resource url: [dir: 'js/jquery/plugins', file: 'jquery.autoGrowInput.js'], disposition: 'head'
         resource url: [dir: 'css/jquery/plugins', file: 'jquery.tagedit.css'], disposition: 'head'
     }
+    fancybox {
+        resource url: [dir: 'css/fancybox', file: 'jquery.fancybox-1.3.4.css'], disposition: 'head'
+        resource url: [dir: 'js/fancybox', file: 'jquery.fancybox-1.3.4.js'], disposition: 'head'
+    }
 
 }

@@ -14,6 +14,8 @@ class Location {
     BigDecimal latitude
     BigDecimal longitude
 
+    transient countryService
+
 
     static constraints = {
         street(nullable: true)
@@ -26,9 +28,28 @@ class Location {
 
     @Override
     public String toString() {
-        if(additional){
+        if (additional) {
             return additional
         }
-        return "${street?:''} ${postalCode?:''} ${city?:''}, ${countryCode}"
+        def result = ""
+        if (street) {
+            result += street
+        }
+        if (postalCode) {
+            result += postalCode
+        }
+        if (city) {
+            result += city
+        }
+        if (result) {
+            result += ", "
+        }
+        if (countryCode) {
+            result += countryService.getISO3166_2().find {it.value == countryCode}?.key ?: countryCode
+        }
+        if (!result) {
+            result = "Undefined"
+        }
+        return result
     }
 }
