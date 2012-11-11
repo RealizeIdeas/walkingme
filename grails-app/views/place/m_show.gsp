@@ -29,7 +29,7 @@
     <img src="https://maps.googleapis.com/maps/api/staticmap?center='${placeInstance.location}', WI&amp;zoom=14&amp;size=288x200&amp;markers='${placeInstance.location}', WI&amp;sensor=true"
          height="200">
 
-    <div data-role="content" id="btnId" data-theme="c" corners="true">
+    <div data-role="button" id="btnId" data-theme="c" corners="true">
         <label style="font-weight: normal;">
             ${placeInstance.location}
         </label>
@@ -38,6 +38,7 @@
             ${placeInstance.distance}
         </label>
     </br>
+
     </div>
 
     <label style="font-weight: normal;">
@@ -51,18 +52,12 @@
         ${placeInstance.telephone}
     </label>
 </br>
-    <label style="font-weight: normal;">
-        ${placeInstance.websiteURL}
-    </label>
+
+        <a href="${placeInstance.websiteURL}"> ${placeInstance.websiteURL}
+        </a>
+
 
 </div>
 
-
-<script type="text/javascript">
-    $.mobile.ajaxEnabled = false;
-    $("#btnId").click(function () {
-
-    });
-</script>
 </body>
 </html>
