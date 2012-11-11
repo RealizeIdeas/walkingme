@@ -130,3 +130,7 @@ grails.plugins.springsecurity.rememberMe.alwaysRemember = true
 grails.plugin.databasemigration.updateOnStart = true
 grails.plugin.databasemigration.updateOnStartFileNames = ['changelog.groovy']
 
+springMobile {
+    deviceResolver = "wurfl"
+}
+
