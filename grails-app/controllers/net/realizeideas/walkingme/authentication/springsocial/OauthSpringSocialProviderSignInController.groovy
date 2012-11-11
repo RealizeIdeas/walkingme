@@ -86,7 +86,7 @@ class OauthSpringSocialProviderSignInController {
                 }
 
                 facebookTemplate.feedOperations().postLink("Start looking for places of interest based on my Facebook Likes",
-                new FacebookLink("http://walkingme.com", "WalkingMe",
+                new FacebookLink("http://www.walkingme.com", "WalkingMe",
                         "App to Walk You around the city.",
                         "This Web App designed to walk you in the city based on your Facebook likes. Also available via mobile devices"))
 
