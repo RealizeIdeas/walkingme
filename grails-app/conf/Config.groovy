@@ -101,6 +101,7 @@ log4j = {
     }
 
         info 'org.codehaus.groovy.grails.web.servlet'        // controllers
+        info 'net.realizeideas.walkingme.search'        // API search
 //    debug 'org.hibernate.SQL'              // SQL logging
 //    debug 'org.apache.http'              // HTTP logging
     error 'org.codehaus.groovy.grails.web.pages',          // GSP

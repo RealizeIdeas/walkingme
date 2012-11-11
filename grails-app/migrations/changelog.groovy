@@ -559,4 +559,28 @@ databaseChangeLog = {
             column(name: "public_id")
         }
     }
+
+    changeSet(author: "ami (generated)", id: "1352581864971-1") {
+        createTable(tableName: "category_facebook_categories") {
+            column(name: "category_id", type: "bigint")
+
+            column(name: "facebook_categories_string", type: "varchar(255)")
+        }
+    }
+
+    changeSet(author: "ami (generated)", id: "1352581864971-2") {
+        createIndex(indexName: "FK59E48874D1D3016A", tableName: "category_facebook_categories") {
+            column(name: "category_id")
+        }
+    }
+
+    changeSet(author: "ami (generated)", id: "1352581864971-3") {
+        addForeignKeyConstraint(baseColumnNames: "category_id", baseTableName: "category_facebook_categories", constraintName: "FK59E48874D1D3016A", deferrable: "false", initiallyDeferred: "false", referencedColumnNames: "id", referencedTableName: "category", referencesUniqueColumn: "false")
+    }
+
+    changeSet(author: "ami (generated)", id: "1352589729106-1") {
+        addColumn(tableName: "place") {
+            column(name: "reference", type: "varchar(255)")
+        }
+    }
 }

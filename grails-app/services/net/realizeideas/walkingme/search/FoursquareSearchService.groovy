@@ -10,9 +10,11 @@ import org.codehaus.groovy.grails.web.json.JSONObject
 import net.realizeideas.walkingme.places.Place
 import net.realizeideas.walkingme.common.Location
 import java.text.SimpleDateFormat
+import org.apache.commons.logging.LogFactory
+import org.apache.commons.logging.Log
 
 class FoursquareSearchService implements PlacesSearchExecutor {
-
+    private static final Log log = LogFactory.getLog(FoursquareSearchService.class)
     def grailsApplication
 
     SearchResult search(Query query) {
@@ -26,7 +28,7 @@ class FoursquareSearchService implements PlacesSearchExecutor {
         def http = new HTTPBuilder("https://api.foursquare.com")
         http.request( GET, ContentType.TEXT ) {
             uri.path = '/v2/venues/search'
-            uri.query = [ll: query.location, intent: 'browse', radius: '50000', query: query.keywords.join(" "), v: df.format(now),
+            uri.query = [ll: query.location, intent: 'checkin', query: query.keywords.join(" "), v: df.format(now),
                          client_id: grailsApplication.config.foursquare.clientId, client_secret: grailsApplication.config.foursquare.clientSecret]
 
             response.success = { resp, reader ->
@@ -43,7 +45,7 @@ class FoursquareSearchService implements PlacesSearchExecutor {
         stopWatch.stop()
 
         if (log.isInfoEnabled()) {
-            log.info("Foursquare search with query ${query.keywords.join(" ")} and location ${query.location} took ${stopWatch.toString()}")
+            log.info("Foursquare search with query ${query.keywords.join(" ")} and location ${query.location} took ${stopWatch.toString()} and found ${places.size()} places")
         }
 
         SearchResult searchResult = new SearchResult()
@@ -59,6 +61,7 @@ class FoursquareSearchService implements PlacesSearchExecutor {
                try {
                     Place place = new Place()
                     place.publicId = venue.id
+                    place.reference = venue.id
                     place.service = "Foursquare"
                     place.title = venue.name
                     place.websiteURL = venue.url

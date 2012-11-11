@@ -4,7 +4,6 @@ import net.realizeideas.walkingme.authentication.Role
 import net.realizeideas.walkingme.authentication.Requestmap
 import net.realizeideas.walkingme.common.translatable.Translatable
 import net.realizeideas.walkingme.keywords.Category
-import net.realizeideas.walkingme.keywords.Keyword
 
 class BootStrap {
 
@@ -19,19 +18,25 @@ class BootStrap {
             UserRole.create(admUser, adminRole, true)
         }
 
-        createRequestMap("/user/**", "IS_AUTHENTICATED_REMEMBERED")
-        createRequestMap("/user/smallBoard", "IS_AUTHENTICATED_ANONYMOUSLY")
-        createRequestMap("/user/board", "IS_AUTHENTICATED_ANONYMOUSLY")
+        createRequestMap("/search/**", "IS_AUTHENTICATED_REMEMBERED")
+        createRequestMap("/login/**", "IS_AUTHENTICATED_REMEMBERED")
+        createRequestMap("/category/**", "IS_AUTHENTICATED_REMEMBERED")
+        createRequestMap("/place/**", "IS_AUTHENTICATED_REMEMBERED")
+        createRequestMap("/login/join", "IS_AUTHENTICATED_ANONYMOUSLY")
+        createRequestMap("/login/auth", "IS_AUTHENTICATED_ANONYMOUSLY")
         createRequestMap("/requestmap/**", "ROLE_ADMIN")
 
-        createCategory("Foods", "en")
-        createCategory("Sports", "en")
-        createCategory("Intertainment", "en")
-        createCategory("Music", "en")
-        createCategory("Shopping", "en")
-
-
-
+        createCategory("Foods", "en", ["Bar", "Food/Beverages", "Food/Grocery", "Kitchen/Cooking", "Restaurant/Cafe",
+                "Local Business", "Small Business"])
+        createCategory("Sports", "en", ["Athlete", "Outdoor Gear/Sporting Goods", "Sports League", "Sports Venue",
+                "Sports/Recreation/Activities", "Amateur Sports Team", "School Sports Team"])
+        createCategory("Intertainment", "en", ["Club", "Hotel", "Movie", "Movie Theater", "Movies/Music",
+                "Museum/Art Gallery", "Book", "Book Store"])
+        createCategory("Music", "en", ["Musician/Band", "Musical Instrument", "Playlist", "Radio Station",
+                "Song", "Concert Tour", "Concert Venue", "Music Award", "Music Chart", "Music Video"])
+        createCategory("Shopping", "en", ["Magazine", "Company", "Clothing", "Spas/Beauty/Personal Care",
+                "Jewelry/Watches", "Local Business", "Organization", "Shopping/Retail", "Small Business",
+                "Product/Service", "Business ServicesConsulting/Business Services"])
     }
 
     void createRequestMap(String url, String configAtt) {
@@ -40,9 +45,9 @@ class BootStrap {
         }
     }
 
-    void createCategory(String title, String language) {
+    void createCategory(String title, String language, List facebookCategories) {
         if (!Category.retrieveByTitle(title, language).list()) {
-            new Category(title: createTranslations(language, title)).save(failOnError: true, flush: true)
+            new Category(title: createTranslations(language, title), facebookCategories: facebookCategories.toSet()).save(failOnError: true, flush: true)
         }
     }
 

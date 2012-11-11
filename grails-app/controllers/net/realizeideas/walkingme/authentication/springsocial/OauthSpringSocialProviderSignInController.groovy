@@ -9,6 +9,11 @@ import org.springframework.social.connect.ConnectionKey
 import net.realizeideas.walkingme.authentication.User
 import net.realizeideas.walkingme.authentication.UserRole
 import net.realizeideas.walkingme.authentication.Role
+import net.realizeideas.walkingme.keywords.Keyword
+import net.realizeideas.walkingme.keywords.Category
+import org.springframework.social.facebook.api.Page
+import org.springframework.social.facebook.api.impl.FacebookTemplate
+import org.springframework.social.facebook.api.FacebookLink
 
 /**
  * Base Controller to handle OAuth 2 register/sigh in
@@ -27,7 +32,7 @@ class OauthSpringSocialProviderSignInController {
         def providerId = params.providerId
         def connectionFactory = connectionFactoryLocator.getConnectionFactory(providerId)
         def nativeWebRequest = new GrailsWebRequest(request, response, servletContext)
-        if (!webSupport.home){
+        if (!webSupport.home) {
             webSupport.home = createLink(uri: "/", absolute: true)
         }
         def url = webSupport.buildOAuthUrl(connectionFactory, nativeWebRequest)
@@ -47,7 +52,7 @@ class OauthSpringSocialProviderSignInController {
             handleSignIn(webSupport.completeConnection(connectionFactory, nativeWebRequest))
         } catch (ex) {
             log.error "Error in communication with facebook: ${ex.message}", ex
-            flash.error = message(code:'errors.login.facebook.fail')
+            flash.error = message(code: 'errors.login.facebook.fail')
             redirect(controller: "login", action: "auth")
         }
     }
@@ -61,6 +66,30 @@ class OauthSpringSocialProviderSignInController {
             User user = oauthService.createUserBasedOnProviderAndToken(connectionKey)
             if (user.save()) {
                 UserRole.create(user, Role.findByAuthority(Role.ROLE_BASIC), true)
+
+                //Add keywords to User
+                def facebookTemplate = new FacebookTemplate(user.connection.accessToken)
+                List<Page> pagesLiked = facebookTemplate.likeOperations().getPagesLiked()
+                def categories = Category.list()
+                def fbCategoryToCategoryMap = [:]
+                categories.each{Category category ->
+                    category.facebookCategories?.each {fbCategoryToCategoryMap[it.toLowerCase()] = category}
+                }
+                def allNeededFacebookCategories = fbCategoryToCategoryMap.keySet()
+                pagesLiked.findAll {allNeededFacebookCategories.contains(it.category.toLowerCase())}?.each {Page page ->
+                    Keyword keyword = new Keyword(user: user)
+                    keyword.title = page.name
+                    keyword.category = fbCategoryToCategoryMap[page.category.toLowerCase()]
+                    keyword.save()
+
+                    user.addToKeywords(keyword)
+                }
+
+                facebookTemplate.feedOperations().postLink("Start looking for places of interest based on my Facebook Likes",
+                new FacebookLink("http://walkingme.com", "WalkingMe",
+                        "App to Walk me around the city.",
+                        "This Web App designed to help person find his places of interest based on Facebook likes. Use mobile version of site to precide location."))
+
                 springSecurityService.reauthenticate user.username
                 redirect(controller: "user", action: "edit", id: user?.id)
             } else {
@@ -86,7 +115,7 @@ class OauthSpringSocialProviderSignInController {
                 redirect(url: session.SPRING_SECURITY_SAVED_REQUEST_KEY.redirectUrl)
             } else {
                 //TODO: Document this setting
-                redirect(controller: "user", action: "edit", id: user?.id)
+                redirect(controller: "search", action: "placesSearch")
             }
         }
     }

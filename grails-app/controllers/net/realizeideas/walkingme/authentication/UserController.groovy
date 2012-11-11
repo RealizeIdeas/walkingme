@@ -25,6 +25,13 @@ class UserController {
         buildModel(new User(params))
     }
 
+    /**
+     * Ajax
+     */
+    def loadUserMap(){
+        render(template: "/user/currentLocation")
+    }
+
     def save() {
         def userInstance = new User(params)
         if (!userInstance.save(flush: true)) {

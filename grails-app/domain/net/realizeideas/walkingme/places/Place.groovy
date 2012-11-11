@@ -10,6 +10,9 @@ class Place {
     static transients = ['distance']
     //Id from Service
     String publicId
+    //Unique only for Google Service, for other same like publicId
+    String reference
+
     String title
     String description
 
@@ -32,6 +35,7 @@ class Place {
         reviews(nullable: true)
         photos(nullable: true)
         checkins(nullable: true)
+        reference(nullable: true)
         publicId(unique: 'service')
     }
 }

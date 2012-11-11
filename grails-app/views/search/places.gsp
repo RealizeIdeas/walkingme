@@ -3,34 +3,143 @@
 <head>
   <meta name="layout" content="main">
   <title>Places</title>
+  <script src="http://maps.googleapis.com/maps/api/js?key=${grailsApplication.config.google.places.apiKey}&sensor=false"
+          type="text/javascript"></script>
+  <r:require modules="jquery-ui, jqModal"/>
+  <g:javascript src="tooltip.js"/>
+  <r:script>
+      var map;
+      var overlay = new google.maps.OverlayView();
+      var bounds = new google.maps.LatLngBounds();
+      var iconPath = '${resource(dir: 'images', file: 'map_marker.png')}';
+      var cookieLocation = jQuery.cookie("location");
+      var latitude = cookieLocation ? parseFloat(cookieLocation.split(',')[0]) : 51.5073346;
+      var longitude = cookieLocation ? parseFloat(cookieLocation.split(',')[1]) : 27.5611;
+      var defaultLocation = new google.maps.LatLng(latitude,longitude);
+
+        var myOptions = {
+    <g:if test="${places}">
+      zoom: 15,
+    </g:if>
+    <g:else>
+      zoom: 4,
+    </g:else>
+    center:defaultLocation ,
+    streetViewControl:false,
+      mapTypeId: google.maps.MapTypeId.ROADMAP
+    };
+    map = new google.maps.Map(document.getElementById("searchResultMap"),
+        myOptions);
+
+    var marker = new google.maps.Marker({ map: map, position: defaultLocation, draggable: false });
+    overlay.draw = function() {};
+    overlay.setMap(map);
+
+    jQuery("#refineLocation").jqm(
+      { modal:true,overlay: 70,
+        height:450, width:650,
+        onHide : function(hash) {
+        hash.o.remove(); // remove overlay
+        hash.w.hide(); // hide window
+        location.reload(true);
+      }
+    });
+      jQuery("#refineLocationLink").click(function(){
+        <g:remoteFunction controller="user" action="loadUserMap" update="refineLocation"/>
+        jQuery("#refineLocation").jqmShow();
+    });
+
+  function placeMarker(location, elemId){
+    var containerPixel = overlay.getProjection().fromLatLngToContainerPixel(location);
+    jQuery(elemId).css({top:containerPixel.y, left:containerPixel.x, 'dislay':'block'});
+  }
+
+  </r:script>
+
 </head>
 
 <body tab="usersTab">
-
-<div id="placesList" class="content scaffold-list" role="main">
-  <h1>Places</h1>
-  <g:if test="${flash.message}">
-    <div class="message" role="status">${flash.message}</div>
-  </g:if>
-    <table id="searchResultContent" class="searchResult">
-    <g:each in="${places}" var="place" status="i">
-      <tr id="place${place.publicId?.replaceAll(":", "_")}">
-        <td class="description">
-          <h5><g:link controller="place" action="show" params="[publicId:place?.publicId, service:place?.service]">
-            ${place.title?.encodeAsHTML()}
-          </g:link></h5>
-
-          <div class="distance">${place.distance?.encodeAsHTML()}</div>
-          <div class="address">${place.location?.toString()?.encodeAsHTML()}</div>
-          <g:if test="${place.ranking}">
-            <div>${place.ranking}</div>
-          </g:if>
-
-        </td>
-      </tr>
-    </g:each>
-  </table>
+<div class="colDx" id="searchResultMapHolder">
+  <div id="searchResultMap">
+  </div>
 
 </div>
+
+<div id="refineLocationLinkHolder">
+  <a href="javascript:void(0)" id="refineLocationLink">Refine My Location</a>
+</div>
+
+<div id="refineLocation" style="display: none" class="jqmWindow"></div>
+
+<h1>Places</h1>
+<g:if test="${flash.message}">
+  <div class="message" role="status">${flash.message}</div>
+</g:if>
+
+<div id="placesList" class="content scaffold-list" role="main">
+
+  <g:if test="${places}">
+    <div id="searchResultContent" class="searchResult">
+      <g:each in="${places}" var="place" status="i">
+        <div id="place${place.publicId}" class="place">
+          <div class="description">
+            <h5><g:link controller="place" action="show" params="[publicId: place?.reference, service: place?.service]">
+              ${place.title?.encodeAsHTML()} ${place.service}
+            </g:link></h5>
+
+            <div class="distance">${place.distance?.encodeAsHTML()}</div>
+
+            <div class="address">${place.location?.toString()?.encodeAsHTML()}</div>
+            <g:if test="${place.ranking}">
+              <div>${place.ranking}</div>
+            </g:if>
+
+          </div>
+        </div>
+      </g:each>
+    </div>
+    <r:script>
+      jQuery(function () {
+        <g:each in="${places}" var="place">
+
+      var latLong${place.publicId} = new google.maps.LatLng(${place.location.latitude}, ${place.location.longitude});
+        var marker${place.publicId} = new google.maps.Marker({
+          position:latLong${place.publicId},
+          map:map,
+          icon:iconPath
+        });
+        bounds.extend(latLong${place.publicId});
+
+        //On place hover change marker Pin
+        jQuery("#place${place.publicId}").live('mouseover',function () {
+          marker${place.publicId}.setIcon("");
+        }).live('mouseout', function () {
+              marker${place.publicId}.setIcon(iconPath);
+            });
+            google.maps.event.addListener(marker${place.publicId}, "click", function() {
+              window.location = "${createLink(controller: 'place', action: 'show', params: [publicId: place?.reference, service: place?.service])}";
+          });
+
+        //Draw tooltips
+        var content${place.publicId} = "<strong>${place.title?.encodeAsHTML()}</strong>" +
+            "<br/>${place.location?.toString()?.encodeAsHTML()}";
+        var tooltipOptions = {
+          marker:marker${place.publicId}, // required
+          content:content${place.publicId}, // required
+          cssClass:'mapTooltip' // name of a css class to apply to tooltip
+        };
+        var tooltip${place.publicId} = new Tooltip(tooltipOptions);
+
+    </g:each>
+      //Resise/rezoom map after all markers pointed
+        map.fitBounds(bounds);
+        map.setZoom(5);
+      });
+    </r:script>
+
+  </g:if>
+
+</div>
+
 </body>
 </html>

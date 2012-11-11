@@ -40,6 +40,9 @@ environments {
         def credentials = envVar ? grails.converters.JSON.parse(envVar)["mysql-5.1"][0]["credentials"] : null
 
         dataSource {
+            pooled = true
+            dialect = 'org.hibernate.dialect.MySQL5InnoDBDialect'
+            driverClassName = "com.mysql.jdbc.Driver"
             url = credentials ? "jdbc:mysql://${credentials.hostname}:${credentials.port}/${credentials.name}?useUnicode=yes&characterEncoding=UTF-8" : ""
             username = credentials ? credentials.username : ""
             password = credentails ? credentials.password : ""
