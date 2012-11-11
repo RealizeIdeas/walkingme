@@ -41,18 +41,20 @@
   <g:checkBox name="enabled" value="${userInstance?.enabled}"/>
 </div>
 
-<div class="fieldcontain ${hasErrors(bean: userInstance, field: 'authorities', 'error')} roles_holder ">
-  <div class="roles_label">
-    <label for="authorities">
-      <g:message code="user.authorities.label" default="Roles"/>
-    </label>
-  </div>
-
-  <div class="roles">
-    <g:each var="entry" in="${roleMap}">
-      <div>
-        <g:checkBox name="${entry.key.authority}" value="${entry.value}"/>
-        <label>${entry.key.authority.encodeAsHTML()}</label>
+<div class="fieldcontain ${hasErrors(bean: userInstance, field: 'keywords', 'error')} ">
+  <label for="lastName">
+    <g:message code="user.keywords.label" default="Keywords"/>
+  </label>
+  <div>
+    <g:each var="category" in="${categories}">
+      <div id="category_${category.id}" class="category_keywords fieldcontain">
+        <label>
+          ${category.title?.getValue("en")}
+        </label>
+        <input type="text" class="tag" id="keywords_${category.id}" name="${category.id}_keywords[]" value=""/>
+        <g:each in="${userInstance.keywords?.findAll{it.category == category}}" status="i" var="keyword">
+          <input type="text" name="${category.id}_keywords[${keyword.id}]" value="${keyword.title}" class="tag"/>
+        </g:each>
       </div>
     </g:each>
   </div>

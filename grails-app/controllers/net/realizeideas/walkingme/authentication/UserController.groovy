@@ -3,6 +3,8 @@ package net.realizeideas.walkingme.authentication
 import org.springframework.dao.DataIntegrityViolationException
 import org.apache.commons.lang.math.RandomUtils
 import net.realizeideas.walkingme.keywords.Category
+import org.apache.commons.lang.StringUtils
+import net.realizeideas.walkingme.keywords.Keyword
 
 /**
  * @author Michael Astreiko
@@ -39,7 +41,7 @@ class UserController {
             return
         }
         addRoles(userInstance)
-
+        addKeywords(userInstance)
         flash.message = message(code: 'default.created.message', args: [message(code: 'user.label', default: 'User'), userInstance.id])
         redirect(action: "show", id: userInstance.id)
     }
@@ -103,6 +105,7 @@ class UserController {
 
         UserRole.removeAll(userInstance)
         addRoles(userInstance)
+        addKeywords(userInstance)
 
         flash.message = message(code: 'default.updated.message', args: [message(code: 'user.label', default: 'User'), userInstance.id])
         redirect(action: "show", id: userInstance.id)
@@ -127,6 +130,35 @@ class UserController {
         catch (DataIntegrityViolationException e) {
             flash.message = message(code: 'default.not.deleted.message', args: [message(code: 'user.label', default: 'User'), id])
             redirect(action: "show", id: id)
+        }
+    }
+
+    private void addKeywords(User userInstance) {
+        def keywords = []
+        Category.list()?.each{category ->
+            params.entrySet().findAll{it.key.indexOf("${category.id}_keywords[") > -1 && it.key.indexOf("keywords[]") < 0}?.each {
+                def keywordKey = StringUtils.substringBetween(it.key, "_keywords[", "]")
+                keywords << Keyword.get(Long.valueOf(keywordKey))
+            }
+        }
+        userInstance.keywords?.findAll{!keywords.contains(it)}?.each{
+            it.delete()
+            userInstance.keywords.remove(it)
+        }
+        params.entrySet().findAll{it.key.indexOf("keywords[]") > -1}?.each{
+            def categoryKey = StringUtils.substringBefore(it.key, "_")
+            def category = Category.get(Long.valueOf(categoryKey))
+            def values = []
+            values.add(it.value)
+            values = values.flatten()
+            values.each{value ->
+                def keyword = new Keyword()
+                keyword.title = value
+                keyword.category = category
+                keyword.user = userInstance
+                keyword.save()
+                userInstance.keywords << keyword
+            }
         }
     }
 
