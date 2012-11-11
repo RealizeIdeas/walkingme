@@ -10,7 +10,7 @@
 <html>
 <head>
     <meta name='layout' content='mobile'/>
-    <title><g:message code="default.edit.label" args="[entityName]"/></title>
+    <title>WalkingMe</title>
 </head>
 
 <body>
