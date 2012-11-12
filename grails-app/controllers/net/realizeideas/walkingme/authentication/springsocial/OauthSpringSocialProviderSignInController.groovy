@@ -14,6 +14,8 @@ import net.realizeideas.walkingme.keywords.Category
 import org.springframework.social.facebook.api.Page
 import org.springframework.social.facebook.api.impl.FacebookTemplate
 import org.springframework.social.facebook.api.FacebookLink
+import org.springframework.security.core.context.SecurityContextHolder
+import org.springframework.security.authentication.RememberMeAuthenticationToken
 
 /**
  * Base Controller to handle OAuth 2 register/sigh in
@@ -26,6 +28,7 @@ class OauthSpringSocialProviderSignInController {
     def usersConnectionRepository
     def oauthService
     def springSecurityService
+    def userCache
     def webSupport = new OAuthGrailsConnectSupport(actionId: "ssoasignin")
 
     def signin = {
@@ -90,7 +93,7 @@ class OauthSpringSocialProviderSignInController {
                         "App to Walk You around the city.",
                         "This Web App designed to walk you in the city based on your Facebook likes. Also available via mobile devices"))
 
-                springSecurityService.reauthenticate user.username
+                reAuthenticate(user)
                 redirect(controller: "user", action: "edit", id: user?.id)
             } else {
                 log.error "Can't save User $user.username: ${user.errors.allErrors}"
@@ -105,7 +108,7 @@ class OauthSpringSocialProviderSignInController {
             def user = User.findByConnection(userConnection)
             if (user) {
                 log.info "User $user.username found in the repository..."
-                springSecurityService.reauthenticate user.username
+                reAuthenticate(user)
             } else {
                 log.error "Connection for User ${userConnection.displayName} exist but User is not - something went wrong"
                 removeConnection(connectionKey)
@@ -134,6 +137,13 @@ class OauthSpringSocialProviderSignInController {
         } catch (e) {
             log.error("Exception during removing Connection ${connectionKey}: ${e.message}", e)
         }
+    }
+
+    private reAuthenticate(User user) {
+        SecurityContextHolder.getContext().setAuthentication(new RememberMeAuthenticationToken(
+                grailsApplication.config.grails.plugins.springsecurity.rememberMe.key,
+                user, user.getAuthorities()))
+        userCache.removeUserFromCache(user.username);
     }
 
 }
