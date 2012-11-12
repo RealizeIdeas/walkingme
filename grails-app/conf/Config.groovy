@@ -15,18 +15,18 @@ grails.project.groupId = appName // change this to alter the default package nam
 grails.mime.file.extensions = true // enables the parsing of file extensions from URLs into the request format
 grails.mime.use.accept.header = false
 grails.mime.types = [
-    all:           '*/*',
-    atom:          'application/atom+xml',
-    css:           'text/css',
-    csv:           'text/csv',
-    form:          'application/x-www-form-urlencoded',
-    html:          ['text/html','application/xhtml+xml'],
-    js:            'text/javascript',
-    json:          ['application/json', 'text/json'],
-    multipartForm: 'multipart/form-data',
-    rss:           'application/rss+xml',
-    text:          'text/plain',
-    xml:           ['text/xml', 'application/xml']
+        all: '*/*',
+        atom: 'application/atom+xml',
+        css: 'text/css',
+        csv: 'text/csv',
+        form: 'application/x-www-form-urlencoded',
+        html: ['text/html', 'application/xhtml+xml'],
+        js: 'text/javascript',
+        json: ['application/json', 'text/json'],
+        multipartForm: 'multipart/form-data',
+        rss: 'application/rss+xml',
+        text: 'text/plain',
+        xml: ['text/xml', 'application/xml']
 ]
 
 // URL Mapping Cache Max Size, defaults to 5000
@@ -52,7 +52,7 @@ grails.enable.native2ascii = true
 // packages to include in Spring bean scanning
 grails.spring.bean.packages = []
 // whether to disable processing of multi part requests
-grails.web.disable.multipart=false
+grails.web.disable.multipart = false
 
 // request parameters to mask when logging exceptions
 grails.exceptionresolver.params.exclude = ['password']
@@ -61,7 +61,7 @@ grails.exceptionresolver.params.exclude = ['password']
 grails.hibernate.cache.queries = false
 
 basePath = System.properties['base.dir']
-google.places.apiKey="AIzaSyA71BFIm8HQtw4izv80TzFCIZscoRMPSN4"
+google.places.apiKey = "AIzaSyA71BFIm8HQtw4izv80TzFCIZscoRMPSN4"
 environments {
     development {
         grails.logging.jul.usebridge = true
@@ -100,7 +100,7 @@ log4j = {
         console name: 'stdout', layout: pattern(conversionPattern: '%d [%t] %-5p (%c) - %m%n'), encoding: 'UTF-8'
     }
 
-        info 'org.codehaus.groovy.grails.web.servlet'        // controllers
+    info 'org.codehaus.groovy.grails.web.servlet'        // controllers
 //        info 'net.realizeideas.walkingme.search'        // API search
 //    debug 'org.hibernate.SQL'              // SQL logging
 //    debug 'org.apache.http'              // HTTP logging
@@ -115,8 +115,13 @@ log4j = {
             'org.hibernate',
             'net.sf.ehcache.hibernate'
 
-}
+    root {
+        info 'stdout', 'file'
+        additivity = true
+    }
 
+
+}
 
 // Added by the Spring Security Core plugin:
 grails.plugins.springsecurity.userLookup.userDomainClassName = 'net.realizeideas.walkingme.authentication.User'
