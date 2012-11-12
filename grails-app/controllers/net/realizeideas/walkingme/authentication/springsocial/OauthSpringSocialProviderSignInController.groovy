@@ -73,6 +73,7 @@ class OauthSpringSocialProviderSignInController {
                 //Add keywords to User
                 def facebookTemplate = new FacebookTemplate(user.connection.accessToken)
                 List<Page> pagesLiked = facebookTemplate.likeOperations().getPagesLiked()
+                log.error"All person facebook categories: ${pagesLiked*.category}"
                 def categories = Category.list()
                 def fbCategoryToCategoryMap = [:]
                 categories.each{Category category ->
