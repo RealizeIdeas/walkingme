@@ -17,6 +17,7 @@ import org.springframework.social.facebook.api.FacebookLink
 import org.springframework.security.core.context.SecurityContextHolder
 import org.springframework.security.authentication.RememberMeAuthenticationToken
 import org.springframework.security.core.userdetails.UserDetails
+import grails.util.Environment
 
 /**
  * Base Controller to handle OAuth 2 register/sigh in
@@ -92,10 +93,12 @@ class OauthSpringSocialProviderSignInController {
                 }
                 try {
 
-                    facebookTemplate.feedOperations().postLink("Start looking for places of interest based on my Facebook Likes",
-                            new FacebookLink("http://www.walkingme.com", "WalkingMe",
-                                    "App to Walk You around the city.",
-                                    "This Web App designed to walk you in the city based on your Facebook likes. Also available via mobile devices"))
+                    if(!Environment.isDevelopmentMode()){
+                        facebookTemplate.feedOperations().postLink("Start looking for places of interest based on my Facebook Likes",
+                                new FacebookLink("http://www.walkingme.com", "WalkingMe",
+                                        "App to Walk You around the city.",
+                                        "This Web App designed to walk you in the city based on your Facebook likes. Also available via mobile devices"))
+                    }
                 } catch (ex) {
                     log.error "Cannot publish on User's board - not enough permissions: ${ex.message}"
                 }
