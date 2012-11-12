@@ -16,6 +16,7 @@ import org.springframework.social.facebook.api.impl.FacebookTemplate
 import org.springframework.social.facebook.api.FacebookLink
 import org.springframework.security.core.context.SecurityContextHolder
 import org.springframework.security.authentication.RememberMeAuthenticationToken
+import org.springframework.security.core.userdetails.UserDetails
 
 /**
  * Base Controller to handle OAuth 2 register/sigh in
@@ -29,6 +30,7 @@ class OauthSpringSocialProviderSignInController {
     def oauthService
     def springSecurityService
     def userCache
+    def userDetailsService
     def webSupport = new OAuthGrailsConnectSupport(actionId: "ssoasignin")
 
     def signin = {
@@ -97,7 +99,7 @@ class OauthSpringSocialProviderSignInController {
                 } catch (ex) {
                     log.error "Cannot publish on User's board - not enough permissions: ${ex.message}"
                 }
-                reAuthenticate(user)
+                reAuthenticate(user.username)
                 redirect(controller: "user", action: "edit", id: user?.id)
             } else {
                 log.error "Can't save User $user.username: ${user.errors.allErrors}"
@@ -112,7 +114,7 @@ class OauthSpringSocialProviderSignInController {
             def user = User.findByConnection(userConnection)
             if (user) {
                 log.info "User $user.username found in the repository..."
-                reAuthenticate(user)
+                reAuthenticate(user.username)
             } else {
                 log.error "Connection for User ${userConnection.displayName} exist but User is not - something went wrong"
                 removeConnection(connectionKey)
@@ -143,11 +145,13 @@ class OauthSpringSocialProviderSignInController {
         }
     }
 
-    private reAuthenticate(User user) {
+    private reAuthenticate(String username) {
+        UserDetails userDetails = userDetailsService.loadUserByUsername(username)
+
         SecurityContextHolder.getContext().setAuthentication(new RememberMeAuthenticationToken(
                 grailsApplication.config.grails.plugins.springsecurity.rememberMe.key,
-                user, user.getAuthorities()))
-        userCache.removeUserFromCache(user.username);
+                userDetails, userDetails.getAuthorities()))
+        userCache.removeUserFromCache(username);
     }
 
 }
