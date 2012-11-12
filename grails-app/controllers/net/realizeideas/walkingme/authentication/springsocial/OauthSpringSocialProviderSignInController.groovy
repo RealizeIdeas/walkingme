@@ -32,6 +32,7 @@ class OauthSpringSocialProviderSignInController {
     def springSecurityService
     def userCache
     def userDetailsService
+    def rememberMeServices
     def webSupport = new OAuthGrailsConnectSupport(actionId: "ssoasignin")
 
     def signin = {
@@ -148,13 +149,21 @@ class OauthSpringSocialProviderSignInController {
         }
     }
 
+    /**
+     * Authentication with use of remember-me.
+     *
+     * @param username
+     * @return
+     */
     private reAuthenticate(String username) {
         UserDetails userDetails = userDetailsService.loadUserByUsername(username)
 
-        SecurityContextHolder.getContext().setAuthentication(new RememberMeAuthenticationToken(
+        def authenticationToken = new RememberMeAuthenticationToken(
                 grailsApplication.config.grails.plugins.springsecurity.rememberMe.key,
-                userDetails, userDetails.getAuthorities()))
+                userDetails, userDetails.getAuthorities())
+        SecurityContextHolder.getContext().setAuthentication(authenticationToken)
         userCache.removeUserFromCache(username);
+        rememberMeServices.loginSuccess(request, response, authenticationToken)
     }
 
 }
