@@ -11,7 +11,7 @@ class SearchService {
     static transactional = false
     def distanceService
 
-    static final int LIMIT_OF_PLACES = 20
+    static final int LIMIT_OF_PLACES = 30
     static final int TWO_HUNDRED_METERS = 200
     static final long SIMILARITY_BOUNDARY = 0.98 as long
 
