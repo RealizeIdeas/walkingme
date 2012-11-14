@@ -33,17 +33,18 @@
 
 <div data-theme="a" data-role="header">
 
-    %{--<g:link controller="user" action="edit" params="[username: sec.username()]" data-role="button"--}%
-            %{--data-icon="gear" data-iconpos="left" class="ui-btn-left" data-transition="slide">Gear</g:link>--}%
 
-    <a href="#popupPanel" data-rel="popup" data-transition="slide" data-position-to="window" data-role="button">
-        <g:message code="walkingme.localized.settings" />
-    </a>
 
-    <a data-role="button" data-transition="slide" href="#page1" data-icon="grid"
+    <a href="#popupPanel" data-rel="popup" data-transition="slide" data-position-to="window" data-role="button">Filter</a>
+
+    %{--<a data-role="button" data-transition="slide" href="#page1" data-icon="grid"
        data-iconpos="left" class="ui-btn-right">
-        <g:message code="walkingme.localized.map" />
-    </a>
+        Map
+    </a>--}%
+  <g:link controller="user" action="edit" params="[username: sec.username()]" data-role="button"
+            data-icon="gear" data-iconpos="left" class="ui-btn-right" data-transition="slide">
+                <g:message code="walkingme.localized.settings" />
+            </g:link>
 
     <h3>
         WalkingMe

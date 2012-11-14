@@ -12,6 +12,7 @@ import org.codehaus.groovy.grails.web.json.JSONObject
 import net.realizeideas.walkingme.places.Place
 import org.apache.commons.logging.LogFactory
 import org.apache.commons.logging.Log
+import org.apache.commons.lang.math.RandomUtils
 
 /**
  * Ask Google Places API for Places
@@ -39,7 +40,7 @@ class GooglePlacesSearchService implements PlacesSearchExecutor {
         StopWatch stopWatch = new StopWatch()
         stopWatch.start()
         def keyword = keywords?.join("|")
-        def keywordsIterator = keywords.iterator()
+        keywords = keywords.toList()
         //Google search not always return result for all keywords in one query -> then do separate search for each keyword until get 20 results
         while (keyword && places.size() < 20) {
             keyword = keyword.trim()
@@ -65,7 +66,11 @@ class GooglePlacesSearchService implements PlacesSearchExecutor {
 
             places += retrievePlaces(googleResult, userLatitude, userLongitude,
                     "Cannot parse specific Google Place with query ${keyword} and location ${query.location}")
-            keyword = keywordsIterator.next()
+            if(keywords.size() > 0) {
+                keyword = keywords.remove(RandomUtils.nextInt(keywords.size()))
+            } else {
+                keyword = null
+            }
         }
         stopWatch.stop()
         if (log.isInfoEnabled()) {

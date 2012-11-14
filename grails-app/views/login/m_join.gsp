@@ -22,16 +22,17 @@
 <h4><g:message code="walkingme.localized.findmessage" /></h4>
 <g:message code="walkingme.localized.descrtption" />
 
-<div class="facebook_button_holder">
+  <div class="facebook_button_holder">
     <a id="joinWithFacebook" href="javascript: void(0)" class="btn-auth facebook_button">
-        <span><g:message code="user.signup.facebook"/></span>
+      <span><g:message code="user.signup.facebook"/></span>
     </a>
-</div>
+  </div>
 
-<g:form name="facebookForm" mapping="springOAuthSocialSignIn"
-        params="[providerId: 'facebook']" style="display: none">
+  <g:form name="facebookForm" mapping="springOAuthSocialSignIn"
+          params="[providerId: 'facebook']" style="display: none">
     <input type="hidden" name="scope" value="${AppConstants.FACEBOOK_PERMISSIONS}"/>
-</g:form>
+  </g:form>
+</div>
 
 <script type="text/javascript">
     $.mobile.ajaxEnabled = false;

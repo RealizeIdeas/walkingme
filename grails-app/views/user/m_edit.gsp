@@ -10,7 +10,7 @@
 <html>
 <head>
     <meta name='layout' content='mobile'/>
-    <title><g:message code="default.edit.label" args="[entityName]"/></title>
+    <title>Settings</title>
 </head>
 
 <body>
@@ -27,15 +27,14 @@
         <g:message code="walkingme.localized.categories" />
     </li>
 
-    <g:each in="${categories}"
-                      status="i" var="category">
+    <g:each in="${categories}" status="i" var="category">
     <li data-icon="arrow-r" data-iconpos="right">
         <g:link controller="category" action="show" id="${category.id}"  data-transition="slide">${category.title?.getValue("en")}</g:link>
     </li>
     </g:each>
 </ul>
 
-<div data-role="content">
+%{--<div data-role="content">
     <div data-role="fieldcontain">
         <fieldset data-role="controlgroup">
             <label for="publishToggle">
@@ -51,6 +50,6 @@
             </select>
         </fieldset>
     </div>
-</div>
+</div>--}%
 </body>
 </html>

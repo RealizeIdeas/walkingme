@@ -14,6 +14,10 @@ import net.realizeideas.walkingme.keywords.Category
 import org.springframework.social.facebook.api.Page
 import org.springframework.social.facebook.api.impl.FacebookTemplate
 import org.springframework.social.facebook.api.FacebookLink
+import org.springframework.security.core.context.SecurityContextHolder
+import org.springframework.security.authentication.RememberMeAuthenticationToken
+import org.springframework.security.core.userdetails.UserDetails
+import grails.util.Environment
 
 /**
  * Base Controller to handle OAuth 2 register/sigh in
@@ -26,6 +30,9 @@ class OauthSpringSocialProviderSignInController {
     def usersConnectionRepository
     def oauthService
     def springSecurityService
+    def userCache
+    def userDetailsService
+    def rememberMeServices
     def webSupport = new OAuthGrailsConnectSupport(actionId: "ssoasignin")
 
     def signin = {
@@ -70,6 +77,7 @@ class OauthSpringSocialProviderSignInController {
                 //Add keywords to User
                 def facebookTemplate = new FacebookTemplate(user.connection.accessToken)
                 List<Page> pagesLiked = facebookTemplate.likeOperations().getPagesLiked()
+                log.error"All person facebook categories: ${pagesLiked*.category}"
                 def categories = Category.list()
                 def fbCategoryToCategoryMap = [:]
                 categories.each{Category category ->
@@ -84,13 +92,18 @@ class OauthSpringSocialProviderSignInController {
 
                     user.addToKeywords(keyword)
                 }
+                try {
 
-                facebookTemplate.feedOperations().postLink("Start looking for places of interest based on my Facebook Likes",
-                new FacebookLink("http://walkingme.com", "WalkingMe",
-                        "App to Walk You around the city.",
-                        "This Web App designed to walk you in the city based on your Facebook likes. Also available via mobile devices"))
-
-                springSecurityService.reauthenticate user.username
+                    if(!Environment.isDevelopmentMode()){
+                        facebookTemplate.feedOperations().postLink("Start looking for places of interest based on my Facebook Likes",
+                                new FacebookLink("http://www.walkingme.com", "WalkingMe",
+                                        "App to Walk You around the city.",
+                                        "This Web App designed to walk you in the city based on your Facebook likes. Also available via mobile devices"))
+                    }
+                } catch (ex) {
+                    log.error "Cannot publish on User's board - not enough permissions: ${ex.message}"
+                }
+                reAuthenticate(user.username)
                 redirect(controller: "user", action: "edit", id: user?.id)
             } else {
                 log.error "Can't save User $user.username: ${user.errors.allErrors}"
@@ -105,7 +118,7 @@ class OauthSpringSocialProviderSignInController {
             def user = User.findByConnection(userConnection)
             if (user) {
                 log.info "User $user.username found in the repository..."
-                springSecurityService.reauthenticate user.username
+                reAuthenticate(user.username)
             } else {
                 log.error "Connection for User ${userConnection.displayName} exist but User is not - something went wrong"
                 removeConnection(connectionKey)
@@ -134,6 +147,23 @@ class OauthSpringSocialProviderSignInController {
         } catch (e) {
             log.error("Exception during removing Connection ${connectionKey}: ${e.message}", e)
         }
+    }
+
+    /**
+     * Authentication with use of remember-me.
+     *
+     * @param username
+     * @return
+     */
+    private reAuthenticate(String username) {
+        UserDetails userDetails = userDetailsService.loadUserByUsername(username)
+
+        def authenticationToken = new RememberMeAuthenticationToken(
+                grailsApplication.config.grails.plugins.springsecurity.rememberMe.key,
+                userDetails, userDetails.getAuthorities())
+        SecurityContextHolder.getContext().setAuthentication(authenticationToken)
+        userCache.removeUserFromCache(username);
+        rememberMeServices.loginSuccess(request, response, authenticationToken)
     }
 
 }

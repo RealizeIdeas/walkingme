@@ -21,7 +21,8 @@ class UITagLib {
 
     def staticMap = {attrs ->
         def googleStaticMapsUrl = new StringBuilder()
-        googleStaticMapsUrl << "http://maps.googleapis.com/maps/api/staticmap?size=${attrs.mapSize ?: '300x214'}&sensor=false"
+        def sensor = attrs.sensor ?: false
+        googleStaticMapsUrl << "http://maps.googleapis.com/maps/api/staticmap?size=${attrs.mapSize ?: '300x214'}&sensor=$sensor"
         def locations = attrs.locations
         if (locations) {
             googleStaticMapsUrl << "&markers=color:red"

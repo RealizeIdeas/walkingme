@@ -33,19 +33,19 @@ class Location {
         }
         def result = ""
         if (street) {
-            result += street
+            result += street + " "
         }
         if (postalCode) {
-            result += postalCode
+            result += postalCode + " "
         }
         if (city) {
-            result += city
+            result += city + " "
         }
         if (result) {
             result += ", "
         }
         if (countryCode) {
-            result += countryService.getISO3166_2().find {it.value == countryCode}?.key ?: countryCode
+            result += countryService.getISO3166_2().find {it.key.equalsIgnoreCase(countryCode)}?.value ?: countryCode
         }
         if (!result) {
             result = "Undefined"
