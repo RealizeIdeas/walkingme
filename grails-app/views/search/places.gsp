@@ -2,7 +2,9 @@
 <html>
 <head>
   <meta name="layout" content="main">
-  <title>Places</title>
+  <title>
+      <g:message code="search.places.places"/>
+  </title>
   <script src="http://maps.googleapis.com/maps/api/js?key=${grailsApplication.config.google.places.apiKey}&sensor=false"
           type="text/javascript"></script>
   <r:require modules="jquery-ui"/>

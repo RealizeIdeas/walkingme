@@ -28,9 +28,13 @@
 
 <g:layoutBody/>
 <div class="footer" role="contentinfo">
-  2012 REID Consulting
-  <div class="comments">For questions and comments, please send us email to <a
-      href="mailto:info@realizeideas.net">info@realizeideas.net</a>
+  <g:message code="main.RAID"/>
+  <div class="comments">
+    <g:message code="main.question"/>
+    <a
+      href="mailto:info@realizeideas.net">
+        <g:message code="main.email"/>
+      </a>
   </div>
 </div>
 

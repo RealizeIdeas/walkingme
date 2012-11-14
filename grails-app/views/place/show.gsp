@@ -3,7 +3,9 @@
 <head>
   <meta name="layout" content="main">
   <link rel="stylesheet" href="${resource(dir: 'css', file: 'place.css')}" type="text/css">
-  <title>Place</title>
+  <title>
+      <g:message code="place.show.place"/>
+  </title>
   <r:require modules="fancybox"/>
   <r:script>
     jQuery("a.photoList").fancybox({

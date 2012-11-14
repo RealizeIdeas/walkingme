@@ -10,7 +10,7 @@
 <body>
 <div data-theme="a" data-role="header">
     <h3>
-        WalkingMe
+        <g:message code="default.walkingme"/>
     </h3>
 </div>
 <g:if test='${flash.message}'>
@@ -19,8 +19,8 @@
     </div>
 </g:if>
 
-<h4><g:message code="walkingme.localized.findmessage" /></h4>
-<g:message code="walkingme.localized.descrtption" />
+<h4><g:message code="login.join.findPlaces" /></h4>
+<g:message code="login.join.description" />
 
   <div class="facebook_button_holder">
     <a id="joinWithFacebook" href="javascript: void(0)" class="btn-auth facebook_button">

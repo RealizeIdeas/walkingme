@@ -13,16 +13,16 @@
 
 <div data-theme="a" data-role="header">
     <a id="addBtn" data-role="button" href="#addPopup" data-rel="popup" class="ui-btn-right" data-transition="pop">
-        <g:message code="walkingme.localized.add" />
+        <g:message code="category.show.add" />
     </a>
 
     <h3>
-        WalkingMe
+        <g:message code="default.walkingme"/>
     </h3>
 
     <g:link controller="user" action="edit" params="[username:sec.username()]" data-role="button"
            data-icon="arrow-l" data-iconpos="left" class="ui-btn-left" data-transition="slide">
-            <g:message code="walkingme.localized.back" />
+            <g:message code="category.show.back" />
            </g:link>
 </div>
 
@@ -35,14 +35,17 @@
             <div data-role="fieldcontain">
                 <fieldset data-role="controlgroup">
                     <label for="title">
-                        <g:message code="walkingme.localized.newkeyword" />
+                        <g:message code="category.show.newKeyword" />
                     </label>
                   <g:textField name="title"/>
                   <g:hiddenField name="categoryId" value="${category?.id}"/>
                 </fieldset>
             </div>
-          <g:submitButton name="addKeyword" value="Add Keyword" data-transition="slide"
-                          data-role="button" data-icon="plus" data-iconpos="right"/>
+          <g:submitButton name="addKeyword" data-transition="slide" value = "${message(code:'category.show.addKeyword')}"
+                          data-role="button" data-icon="plus" data-iconpos="right">
+
+              </g:submitButton>
+
 
         </g:form>
     </div>
@@ -50,7 +53,7 @@
 
 <div data-role="content">
     <label for="categoryList">
-        <g:message code="walkingme.localized.deletedescription" />
+        <g:message code="category.show.delete" />
     </label>
     <ul id="categoryList" data-role="listview" data-divider-theme="b" data-inset="true">
         <li data-role="list-divider" role="heading">

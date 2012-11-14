@@ -3,7 +3,9 @@
 <head>
   <meta name="layout" content="main">
   <g:set var="entityName" value="${message(code: 'user.label', default: 'User')}"/>
-  <title>Update Likes</title>
+  <title>
+    <g:message code="user.edit.updateLikes"/>
+  </title>
   <r:require modules="jquery-ui, tagedit"/>
   <r:script>
     <g:each var="category" in="${categories}">
@@ -15,7 +17,9 @@
 <body tab="usersTab">
 
 <div id="edit-user" class="content scaffold-edit" role="main">
-  <h1>Update your Likes</h1>
+  <h1>
+      <g:message code="user.edit.updateLikes"/>
+  </h1>
   <g:if test="${flash.message}">
     <div class="message" role="status">${flash.message}</div>
   </g:if>

@@ -35,7 +35,9 @@
 
 
 
-    <a href="#popupPanel" data-rel="popup" data-transition="slide" data-position-to="window" data-role="button">Filter</a>
+    <a href="#popupPanel" data-rel="popup" data-transition="slide" data-position-to="window" data-role="button">
+        <g:message code="search.places.filter" />
+    </a>
 
     %{--<a data-role="button" data-transition="slide" href="#page1" data-icon="grid"
        data-iconpos="left" class="ui-btn-right">
@@ -43,18 +45,18 @@
     </a>--}%
   <g:link controller="user" action="edit" params="[username: sec.username()]" data-role="button"
             data-icon="gear" data-iconpos="left" class="ui-btn-right" data-transition="slide">
-                <g:message code="walkingme.localized.settings" />
+                <g:message code="search.places.Settings" />
             </g:link>
 
     <h3>
-        WalkingMe
+        <g:message code="default.walkingme" />
     </h3>
 </div>
 
 <div data-role="content">
     <ul data-role="listview" data-divider-theme="b" data-inset="true">
         <li data-role="list-divider" role="heading">
-            <g:message code="walkingme.localized.places" />
+            <g:message code="search.places.places" />
         </li>
 
         <g:each in="${places}" status="i" var="place">
