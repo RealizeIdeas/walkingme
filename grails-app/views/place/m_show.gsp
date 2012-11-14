@@ -20,7 +20,9 @@
     </h3>
 
     <g:link controller="search" action="placesSearch" data-role="button"
-            data-icon="arrow-l" data-iconpos="left" class="ui-btn-left" data-transition="slide">Back</g:link>
+            data-icon="arrow-l" data-iconpos="left" class="ui-btn-left" data-transition="slide">
+                <g:message code="walkingme.localized.back" />
+            </g:link>
 
 </div>
 

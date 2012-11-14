@@ -18,13 +18,13 @@
     <g:link controller="search" action="placesSearch" params="[username:sec.username()]" data-role="button"
             class="ui-btn-left" data-transition="slide">OK</g:link>
     <h3 id="settings">
-        Settings
+        <g:message code="walkingme.localized.settings" />
     </h3>
 </div>
 
 <ul id="CategoriesList" data-role="listview" data-divider-theme="b" data-inset="true">
     <li data-role="list-divider" role="heading">
-        Categories
+        <g:message code="walkingme.localized.categories" />
     </li>
 
     <g:each in="${categories}"
@@ -39,7 +39,7 @@
     <div data-role="fieldcontain">
         <fieldset data-role="controlgroup">
             <label for="publishToggle">
-                Publish on wall
+                <g:message code="walkingme.localized.publishonwall" />
             </label>
             <select name="publishToggle" id="publishToggle" data-theme="b" data-role="slider">
                 <option value="off">

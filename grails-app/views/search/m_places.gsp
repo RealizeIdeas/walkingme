@@ -36,11 +36,13 @@
     %{--<g:link controller="user" action="edit" params="[username: sec.username()]" data-role="button"--}%
             %{--data-icon="gear" data-iconpos="left" class="ui-btn-left" data-transition="slide">Gear</g:link>--}%
 
-    <a href="#popupPanel" data-rel="popup" data-transition="slide" data-position-to="window" data-role="button">Gear</a>
+    <a href="#popupPanel" data-rel="popup" data-transition="slide" data-position-to="window" data-role="button">
+        <g:message code="walkingme.localized.settings" />
+    </a>
 
     <a data-role="button" data-transition="slide" href="#page1" data-icon="grid"
        data-iconpos="left" class="ui-btn-right">
-        Map
+        <g:message code="walkingme.localized.map" />
     </a>
 
     <h3>
@@ -51,7 +53,7 @@
 <div data-role="content">
     <ul data-role="listview" data-divider-theme="b" data-inset="true">
         <li data-role="list-divider" role="heading">
-            Places
+            <g:message code="walkingme.localized.places" />
         </li>
 
         <g:each in="${places}" status="i" var="place">

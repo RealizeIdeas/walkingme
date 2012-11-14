@@ -19,7 +19,8 @@
     </div>
 </g:if>
 
-<h4>Find places and events you are interested in</h4>
+<h4><g:message code="walkingme.localized.findmessage" /></h4>
+<g:message code="walkingme.localized.descrtption" />
 
 <div class="facebook_button_holder">
     <a id="joinWithFacebook" href="javascript: void(0)" class="btn-auth facebook_button">
