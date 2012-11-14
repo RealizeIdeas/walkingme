@@ -28,7 +28,7 @@
 
 <g:layoutBody/>
 <div class="footer" role="contentinfo">
-  <g:message code="main.RAID"/>
+  <g:message code="footer.REID"/>
   <div class="comments">
     <g:message code="main.question"/>
     <a

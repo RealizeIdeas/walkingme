@@ -5,14 +5,17 @@
     <header class="top-bar">
         <div class="wrapper">
             <hgroup>
-                <h1 class="logo"><a href="${request.contextPath ?: '/'}">W
-                <g:message code="default.walkingme"/>
-                </a></h1>
+                <h1 class="logo">
+                  <a href="${request.contextPath ?: '/'}">
+                    <g:message code="default.walkingme"/>
+                </a>
+                </h1>
 
-                <div id="precise_location"><a href="javascript:void(0)" title="Precise location"><r:img dir="images"
-                                                                                                        file="location.png"
-                                                                                                        alt="Precise location"/></a>
-                </div>
+              <div id="precise_location">
+                <a href="javascript:void(0)" title="Precise location">
+                  <r:img dir="images" file="location.png" alt="Precise location"/>
+                </a>
+              </div>
             </hgroup>
 
 
@@ -31,8 +34,8 @@
                             <ul>
                                 <li><g:link controller="user" action="edit"
                                             id="${sec.loggedInUserInfo(field: 'id')}">
-                                                <g:message code="header.editMyLikes"/>
-                                            </g:link></li>
+                                    <g:message code="header.editMyLikes"/>
+                                </g:link></li>
                                 <li><g:link controller="logout">
                                     <g:message code="header.logOut"/>
                                 </g:link></li>
