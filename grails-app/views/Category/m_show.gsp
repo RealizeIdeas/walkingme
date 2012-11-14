@@ -35,7 +35,7 @@
             <div data-role="fieldcontain">
                 <fieldset data-role="controlgroup">
                     <label for="title">
-                        New keyword
+                        <g:message code="walkingme.localized.newkeyword" />
                     </label>
                   <g:textField name="title"/>
                   <g:hiddenField name="categoryId" value="${category?.id}"/>
@@ -50,7 +50,7 @@
 
 <div data-role="content">
     <label for="categoryList">
-        *Delete keyword click the button
+        <g:message code="walkingme.localized.deletedescription" />
     </label>
     <ul id="categoryList" data-role="listview" data-divider-theme="b" data-inset="true">
         <li data-role="list-divider" role="heading">
