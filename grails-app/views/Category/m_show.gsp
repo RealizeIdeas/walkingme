@@ -13,7 +13,7 @@
 
 <div data-theme="a" data-role="header">
     <a id="addBtn" data-role="button" href="#addPopup" data-rel="popup" class="ui-btn-right" data-transition="pop">
-        Add
+        <g:message code="walkingme.localized.add" />
     </a>
 
     <h3>
@@ -21,7 +21,9 @@
     </h3>
 
     <g:link controller="user" action="edit" params="[username:sec.username()]" data-role="button"
-           data-icon="arrow-l" data-iconpos="left" class="ui-btn-left" data-transition="slide">Back</g:link>
+           data-icon="arrow-l" data-iconpos="left" class="ui-btn-left" data-transition="slide">
+            <g:message code="walkingme.localized.back" />
+           </g:link>
 </div>
 
 <div data-role="popup" id="addPopup" data-position-to="window">
