@@ -6,6 +6,57 @@
   <title>
       <g:message code="place.show.place"/>
   </title>
+
+
+  <script src="http://maps.googleapis.com/maps/api/js?key=${grailsApplication.config.google.places.apiKey}&sensor=false"
+          type="text/javascript"></script>
+  <r:require modules="jquery-ui"/>
+  <r:script>
+      var map;
+      var overlay = new google.maps.OverlayView();
+      var bounds = new google.maps.LatLngBounds();
+      var iconPath = '${resource(dir: 'images', file: 'map_marker4.png')}';
+      var cookieLocation = jQuery.cookie("location");
+      var latitude = cookieLocation ? parseFloat(cookieLocation.split(',')[0]) : 51.5073346;
+      var longitude = cookieLocation ? parseFloat(cookieLocation.split(',')[1]) : 27.5611;
+      var defaultLocation = new google.maps.LatLng(latitude,longitude);
+
+        %{--var myOptions = {--}%
+    %{--<g:if test="${places}">--}%
+      %{--zoom: 15,--}%
+    %{--</g:if>--}%
+    %{--<g:else>--}%
+      %{--zoom: 4,--}%
+    %{--</g:else>--}%
+    %{--center:defaultLocation ,--}%
+    %{--streetViewControl:false,--}%
+      %{--mapTypeId: google.maps.MapTypeId.ROADMAP--}%
+    %{--};--}%
+    %{--map = new google.maps.Map(document.getElementById("searchResultMap"),--}%
+        %{--myOptions);--}%
+
+    %{--var marker = new google.maps.Marker({ map: map, position: defaultLocation, draggable: false });--}%
+    %{--overlay.draw = function() {};--}%
+    %{--overlay.setMap(map);--}%
+
+    jQuery("#refineLocation").jqm(
+      { modal:true,overlay: 70,
+        height:450, width:650,
+        onHide : function(hash) {
+        hash.o.remove(); // remove overlay
+        hash.w.hide(); // hide window
+        location.reload(true);
+      }
+    });
+
+  function placeMarker(location, elemId){
+    var containerPixel = overlay.getProjection().fromLatLngToContainerPixel(location);
+    jQuery(elemId).css({top:containerPixel.y, left:containerPixel.x, 'dislay':'block'});
+  }
+
+  </r:script>
+
+
   <r:require modules="fancybox"/>
   <r:script>
     jQuery("a.photoList").fancybox({
