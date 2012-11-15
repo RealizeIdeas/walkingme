@@ -12,29 +12,10 @@
           type="text/javascript"></script>
   <r:require modules="jquery-ui"/>
   <r:script>
-      var map;
-      var overlay = new google.maps.OverlayView();
-      var bounds = new google.maps.LatLngBounds();
-      var iconPath = '${resource(dir: 'images', file: 'map_marker4.png')}';
       var cookieLocation = jQuery.cookie("location");
       var latitude = cookieLocation ? parseFloat(cookieLocation.split(',')[0]) : 51.5073346;
       var longitude = cookieLocation ? parseFloat(cookieLocation.split(',')[1]) : 27.5611;
       var defaultLocation = new google.maps.LatLng(latitude,longitude);
-
-    jQuery("#refineLocation").jqm(
-      { modal:true,overlay: 70,
-        height:450, width:650,
-        onHide : function(hash) {
-        hash.o.remove(); // remove overlay
-        hash.w.hide(); // hide window
-        location.reload(true);
-      }
-    });
-
-  function placeMarker(location, elemId){
-    var containerPixel = overlay.getProjection().fromLatLngToContainerPixel(location);
-    jQuery(elemId).css({top:containerPixel.y, left:containerPixel.x, 'dislay':'block'});
-  }
 
   </r:script>
 
