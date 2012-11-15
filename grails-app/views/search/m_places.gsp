@@ -85,7 +85,8 @@
 
     <g:each in="${categories}"
             status="i" var="category">
-        <input type="checkbox" id="${category.id}" date-theme="a" data-mini="true" ${params.filterByCategory ? (params.selectedCategories?.split(",").contains("${category.id}") ? "checked=\"checked\"" : "") : "checked=\"checked\""}/>
+        <input type="checkbox" id="${category.id}" date-theme="a" data-mini="true" ${params.filterByCategory ?
+          (params.selectedCategories?.split(",").contains("${category.id}") ? "checked=\"checked\"" : "") : "checked=\"checked\""}/>
         <label for="${category.id}" data-mini="true">${category.title?.getValue("en")}</label>
     </g:each>
     </div>

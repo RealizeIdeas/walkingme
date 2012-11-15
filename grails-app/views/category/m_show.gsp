@@ -22,7 +22,7 @@
 
     <g:link controller="user" action="edit" params="[username:sec.username()]" data-role="button"
            data-icon="arrow-l" data-iconpos="left" class="ui-btn-left" data-transition="slide">
-            <g:message code="category.show.back" />
+            <g:message code="default.back" />
            </g:link>
 </div>
 

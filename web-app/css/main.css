@@ -659,6 +659,27 @@ a.skip {
     margin: 10px;
 }
 
+.filter-bar {
+    border-bottom: 1px solid #137380;
+    border-bottom-color: rgba(4, 40, 71, 0.8);
+    background-color: #378ea4;
+    color: white;
+    width: 100%;
+    font-size: 17px;
+    font-weight: normal;
+    text-decoration: none;
+}
+
+.filter-bar .updateButton {
+    border-width: 0;
+    background-color: #378ea4;
+    position: relative;
+    float: right;
+    color: white;
+    font-size: 16px;
+    font-weight: normal;
+    text-decoration: none;
+}
 
 .top-bar {
     position: absolute;

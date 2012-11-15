@@ -33,7 +33,7 @@
     <g:message code="main.question"/>
     <a
       href="mailto:info@realizeideas.net">
-        <g:message code="main.email"/>
+        info@realizeideas.net
       </a>
   </div>
 </div>

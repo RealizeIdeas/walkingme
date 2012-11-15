@@ -66,6 +66,18 @@
   <div class="message" role="status">${flash.message}</div>
 </g:if>
 
+<div id="checkBoxFilter" class="filter-bar">
+   <g:message code="search.places.filter" />
+  <g:each in="${categories}" status="i" var="category">
+    <input type="checkbox" id="${category.id}" ${params.filterByCategory ?
+      (params.selectedCategories?.split(",").contains("${category.id}") ? "checked=\"checked\"" : "") : "checked=\"checked\""}/>
+    <label for="${category.id}" data-mini="true">${category.title?.getValue("en")}</label>
+  </g:each>
+  <button id="updateLabel" class="updateButton">
+    <g:message code="search.places.update"/>
+  </button>
+</div>
+
 <div id="placesList" class="content scaffold-list" role="main">
 
   <g:if test="${places}">
@@ -129,6 +141,15 @@
   </g:if>
 
 </div>
-
+<script type="text/javascript">
+  $("#updateLabel").click( function () {
+    var categories = "";
+    jQuery("#checkBoxFilter input:checked").each(function () {
+      categories += jQuery(this).attr('id') + ",";
+    });
+    categories = categories.substring(0, categories.length - 1);
+    window.location.href = "${createLink(controller: 'search', action: 'placesSearch')}?filterByCategory=true&selectedCategories=" + categories;
+  })
+</script>
 </body>
 </html>

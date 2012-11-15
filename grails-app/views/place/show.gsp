@@ -21,24 +21,6 @@
       var longitude = cookieLocation ? parseFloat(cookieLocation.split(',')[1]) : 27.5611;
       var defaultLocation = new google.maps.LatLng(latitude,longitude);
 
-        %{--var myOptions = {--}%
-    %{--<g:if test="${places}">--}%
-      %{--zoom: 15,--}%
-    %{--</g:if>--}%
-    %{--<g:else>--}%
-      %{--zoom: 4,--}%
-    %{--</g:else>--}%
-    %{--center:defaultLocation ,--}%
-    %{--streetViewControl:false,--}%
-      %{--mapTypeId: google.maps.MapTypeId.ROADMAP--}%
-    %{--};--}%
-    %{--map = new google.maps.Map(document.getElementById("searchResultMap"),--}%
-        %{--myOptions);--}%
-
-    %{--var marker = new google.maps.Marker({ map: map, position: defaultLocation, draggable: false });--}%
-    %{--overlay.draw = function() {};--}%
-    %{--overlay.setMap(map);--}%
-
     jQuery("#refineLocation").jqm(
       { modal:true,overlay: 70,
         height:450, width:650,

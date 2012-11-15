@@ -21,7 +21,7 @@
 
     <g:link controller="search" action="placesSearch" data-role="button"
             data-icon="arrow-l" data-iconpos="left" class="ui-btn-left" data-transition="slide">
-                <g:message code="place.show.back" />
+                <g:message code="default.back" />
             </g:link>
 
 </div>
