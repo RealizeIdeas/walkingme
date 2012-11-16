@@ -20,6 +20,11 @@
     <h3 id="settings">
         <g:message code="user.edit.settings" />
     </h3>
+
+  <g:link controller="logout" data-role="button" class="ui-btn-right">
+    <g:message code="header.logOut"/>
+  </g:link>
+
 </div>
 
 <ul id="CategoriesList" data-role="listview" data-divider-theme="b" data-inset="true">

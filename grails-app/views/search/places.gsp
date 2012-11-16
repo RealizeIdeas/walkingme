@@ -74,7 +74,7 @@
     <label for="${category.id}" data-mini="true">${category.title?.getValue("en")}</label>
   </g:each>
   <button id="updateLabel" class="updateButton">
-    <g:message code="search.places.update"/>
+    <g:message code="search.places.reload"/>
   </button>
 </div>
 
